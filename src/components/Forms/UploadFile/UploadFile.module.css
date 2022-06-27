@@ -1,0 +1,30 @@
+.dragNdropWrapper {
+  display: flex;
+  padding: 50px;
+  justify-content: center;  
+  /* margin-top: 40px; */
+  max-width: 100%;
+  text-align: center;
+  background-color: #f1f9ff;
+  border: dashed 2px #006bb6;
+}
+
+.dragNdropWrapperActive {
+  display: flex;
+  padding: 50px;
+  justify-content: center;  
+  margin-top: 40px;
+  max-width: 100%;
+  text-align: center;
+  background-color: #ffffff;
+  border: dashed 2px #006bb6;
+}
+
+.inputFileUpload {
+  display: none;
+}
+
+.uploadButton {
+  margin-top: 20px;
+  cursor: pointer;
+}

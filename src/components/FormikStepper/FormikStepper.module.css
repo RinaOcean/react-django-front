@@ -1,0 +1,43 @@
+.form {  
+  margin: 0 auto;
+  width: 50%; 
+}
+
+.buttonsWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.button {
+  border-style: none;
+  border: solid 2px #006bb6;
+  padding: 10px 20px;
+  background-color: white;
+  color: #006bb6;
+  cursor: pointer;
+}
+
+.buttonInvis {
+  visibility: hidden;
+}
+
+.buttonActive {
+  border-style: none;
+  border: solid 2px #006bb6;
+  padding: 10px 20px;
+  background-color: white;
+  color: #006bb6;
+  cursor: pointer;
+}
+
+.buttonNotActive {
+  cursor: not-allowed;
+  pointer-events: none;
+  border-style: none;
+  border: solid 2px #b6b6b6;
+  padding: 10px 20px;
+  background-color: white;
+  color: #b6b6b6;  
+}
+
