@@ -8,7 +8,7 @@ import styles from "./UploadFile.module.css";
 
 const UploadFile = () => {
   // const { activeStepIndex, setActiveStepIndex, formData, setFormData } = useContext(FormContext);
-  const { step, setStep, selectedFile, setSelectedFile } = useContext(FormContext);
+  const { step, setStep, selectedFile, setSelectedFile, activeBtn, setActiveBtn } = useContext(FormContext);
   
   const inputRef = React.useRef(null);
   
@@ -53,10 +53,13 @@ const UploadFile = () => {
       try {
         const res = await axios.post("http://127.0.0.1:8000/file_upload/", file)
         formik.setFieldValue('file', e.dataTransfer.files[0]);
-        setSelectedFile(file.get('file'))     
+        setSelectedFile(file.get('file'))   
+        setActiveBtn(true)
+        
       } catch (e) {
         console.log(e.response.data.errors.file[0]);
       }      
+      
     }  
   };
 
@@ -70,7 +73,8 @@ const UploadFile = () => {
       try {
         const res = await axios.post("http://127.0.0.1:8000/file_upload/", file)
         formik.setFieldValue('file', e.target.files[0]);
-        setSelectedFile(file.get('file'))     
+        setSelectedFile(file.get('file'))    
+        setActiveBtn(true) 
       } catch (e) {
         console.log(e);
       }      

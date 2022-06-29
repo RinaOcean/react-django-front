@@ -12,6 +12,7 @@ const FormikStepper = ({children, ...props}) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedKey, setSelectedKey] = useState(null);
   const [completed, setCompleted] = useState(false)
+  const [activeBtn, setActiveBtn] = useState(false)
   const currentChild = childrenArray[step]
  
  
@@ -21,6 +22,7 @@ const FormikStepper = ({children, ...props}) => {
 
 const submitHandler = async (e) => {
   e.preventDefault()
+  setActiveBtn(false)
   if(step === childrenArray.length - 1) {
         console.log("ok");
         const formData = new FormData(e.target);
@@ -31,7 +33,7 @@ const submitHandler = async (e) => {
           const res = await axios.post("http://127.0.0.1:8000/sftp_upload/", formData)
           console.log(res);
           setCompleted(true)
-    
+          
         } catch (e) {
           console.log(e);
         }
@@ -41,7 +43,7 @@ const submitHandler = async (e) => {
      }
 
 return (
-    <FormContext.Provider value={{step, setStep, selectedFile, setSelectedFile, selectedKey, setSelectedKey}} >
+    <FormContext.Provider value={{step, setStep, selectedFile, setSelectedFile, selectedKey, setSelectedKey, activeBtn, setActiveBtn}} >
             
       <Formik {...props}>
         <Form className={styles.form} autoComplete='off' onSubmit={(e) => submitHandler(e)}  encType="multipart/form-data">
@@ -75,7 +77,7 @@ return (
                back
               </button>
               <button
-                 className={!selectedFile && !selectedKey? styles.buttonNotActive : styles.buttonActive}                
+                 className={!activeBtn? styles.buttonNotActive : styles.buttonActive}                
                  type="submit"                        
               >
                 {isLastStep()? 'submit' : 'next'}

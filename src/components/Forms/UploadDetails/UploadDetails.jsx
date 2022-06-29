@@ -13,7 +13,7 @@ const Input = styled('input')({
 });
 
 const UploadDetails = () => {
-  const { step, setStep, selectedFile, setSelectedFile, selectedKey, setSelectedKey } = useContext(FormContext);
+  const { step, setStep, selectedFile, setSelectedFile, selectedKey, setSelectedKey, activeBtn, setActiveBtn  } = useContext(FormContext);
   const inputRef = React.useRef(null);
 
   const ValidationSchema = yup.object().shape({
@@ -50,6 +50,7 @@ const UploadDetails = () => {
       // keyFile.append("key", e.target.files[0]);     
       formik.setFieldValue('key', e.target.files[0]);
       setSelectedKey(true)
+      setActiveBtn(true)
       // try {
       //   const res = await axios.post("http://127.0.0.1:8000/file_upload/", file)
       //   formik.setFieldValue('key', e.target.files[0]);
