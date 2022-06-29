@@ -55,7 +55,7 @@ const UploadFile = () => {
         formik.setFieldValue('file', e.dataTransfer.files[0]);
         setSelectedFile(file.get('file'))     
       } catch (e) {
-        console.log(e);
+        console.log(e.response.data.errors.file[0]);
       }      
     }  
   };
