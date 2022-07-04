@@ -1,5 +1,5 @@
 import { Stepper, Typography, Step, StepLabel, Box, Card, CardContent } from '@material-ui/core';
-import { Form, Formik, useFormik } from 'formik';
+import { Form, Formik } from 'formik';
 import React, { useState, createContext } from 'react';
 import axios from 'axios';
 import styles from './FormikStepper.module.css';
@@ -13,8 +13,11 @@ const FormikStepper = ({children, ...props}) => {
   const [selectedKey, setSelectedKey] = useState(null);
   const [completed, setCompleted] = useState(false)
   const [activeBtn, setActiveBtn] = useState(false)
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isFailed, setIsFailed] = useState(false)
   const currentChild = childrenArray[step]
- 
+  const currentStep = step
  
   function isLastStep () {
     return step === childrenArray.length - 1
@@ -42,12 +45,19 @@ const submitHandler = async (e) => {
       }
      }
 
+     const isStepFailed = (step) => {
+       if (isFailed) {
+         return step === currentStep;
+       }
+      
+    };
+
 return (
-    <FormContext.Provider value={{step, setStep, selectedFile, setSelectedFile, selectedKey, setSelectedKey, activeBtn, setActiveBtn}} >
+    <FormContext.Provider value={{step, setStep, isFailed, setIsFailed, errorMessage, setErrorMessage, selectedFile, setSelectedFile, selectedKey, setSelectedKey, activeBtn, setActiveBtn}} >
             
       <Formik {...props}>
         <Form className={styles.form} autoComplete='off' onSubmit={(e) => submitHandler(e)}  encType="multipart/form-data">
-        {/* stepper */}
+        {/* stepper
         <Box sx={{ width: '100%' }}>
           <Stepper activeStep={step} alternativeLabel>
             {childrenArray.map((child, index) => (
@@ -56,7 +66,30 @@ return (
               </Step>
             ))}
           </Stepper>       
-        </Box>
+        </Box> */}
+
+        <Box sx={{ width: '100%' }}>
+      <Stepper activeStep={step}>
+        {childrenArray.map((child, index) => {
+          const labelProps = {};
+          if (isStepFailed(index)) {
+            labelProps.optional = (
+              <Typography variant="caption" color="error">
+                {errorMessage}
+              </Typography>
+            );
+
+            labelProps.error = true;
+          }
+
+          return (
+            <Step key={child.props.label}>
+              <StepLabel {...labelProps}>{child.props.label}</StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
+    </Box>
           
           {/* piece of form */}
             

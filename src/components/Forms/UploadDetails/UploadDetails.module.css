@@ -8,6 +8,36 @@
   margin-bottom: 15px;
 }
 
+.inputField {
+  all: unset;
+  width: 100%;
+  border: 1px solid gray;
+  padding-top: 4px;  
+} 
+
+.inputWrapper input:hover,
+.inputWrapper input:focus {
+  border: 1px solid #1891e7;
+}
+
+.inputFieldError {
+  all: unset;
+  width: 100%;
+  border: 1px solid rgb(228, 65, 65);
+  padding-top: 4px;
+} 
+
+/* input.inputField {
+  all: unset;
+  width: 100%;
+  border: 1px solid gray;
+  padding-top: 4px;  
+}  */
+
 .errorMessage {
-  color: red;
+  color: rgb(228, 65, 65);
+}
+
+.selectedKey {
+  margin-left: 10px;
 }
