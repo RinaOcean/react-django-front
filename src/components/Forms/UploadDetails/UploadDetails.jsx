@@ -69,10 +69,8 @@ const onButtonClick = () => {
   return (          
        <>
             <div className={styles.inputWrapper}>
-              <p htmlFor='hostName' >Selected file: {selectedFile.name}</p>
-
+              <p>Selected file: {selectedFile.name}</p>
             </div>
-
 
             <div className={styles.inputWrapper}>
               <label htmlFor='hostName' >SFTP host name</label>
@@ -114,7 +112,7 @@ const onButtonClick = () => {
               />
               <div>           
                 <button type="button"  onClick={onButtonClick}>Browse</button> 
-                {!formik.values.key? <span>file is not selected</span> : <span>{formik.values.key.name}</span>}                               
+                {!formik.values.key? <span className={styles.selectedKey}>file is not selected</span> : <span className={styles.selectedKey}>{formik.values.key.name}</span>}                               
               </div> 
             </div>      
 

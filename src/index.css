@@ -56,3 +56,7 @@ svg.MuiStepIcon-root.MuiStepIcon-active{
 svg.MuiStepIcon-root.MuiStepIcon-completed{
   color: #006bb6 !important;
 }
+
+svg.MuiStepIcon-root.MuiStepIcon-active.Mui-error{
+  color: #f44336 !important;
+}

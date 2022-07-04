@@ -11,3 +11,7 @@
 .errorMessage {
   color: red;
 }
+
+.selectedKey {
+  margin-left: 10px;
+}

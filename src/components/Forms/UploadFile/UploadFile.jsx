@@ -3,23 +3,18 @@ import { useFormik } from "formik";
 import axios from 'axios';
 import * as yup from "yup";
 import {FormContext} from "../../FormikStepper/FormikStepper";
-import { Card, CardContent } from '@mui/material';
+import DoneIcon from '@mui/icons-material/Done';
 import styles from "./UploadFile.module.css";
 
 const UploadFile = () => {
-  // const { activeStepIndex, setActiveStepIndex, formData, setFormData } = useContext(FormContext);
-  const { step, setStep, selectedFile, setSelectedFile, activeBtn, setActiveBtn } = useContext(FormContext);
+  const { step, setStep, selectedFile, setSelectedFile, activeBtn, setActiveBtn, isFailed, setIsFailed, errorMessage, setErrorMessage, } = useContext(FormContext);
   
   const inputRef = React.useRef(null);
   
   const ValidationSchema = yup.object().shape({
-    file: yup.mixed().required('File is required'),
+    file: yup.mixed().required('File is required')
   })
   
-  const renderError = (message) => (
-    <p className="italic text-red-600">{message}</p>
-  );
-
   const formik = useFormik({
   enableReinitialize: false,
   validationSchema: ValidationSchema,
@@ -57,7 +52,9 @@ const UploadFile = () => {
         setActiveBtn(true)
         
       } catch (e) {
-        console.log(e.response.data.errors.file[0]);
+        setIsFailed(true);
+        setErrorMessage(e.response.data.errors.file[0])
+        
       }      
       
     }  
@@ -76,7 +73,8 @@ const UploadFile = () => {
         setSelectedFile(file.get('file'))    
         setActiveBtn(true) 
       } catch (e) {
-        console.log(e);
+        setIsFailed(true);
+        setErrorMessage(e.response.data.errors.file[0])
       }      
     }  
   };
@@ -86,32 +84,40 @@ const onButtonClick = () => {
   inputRef.current.click();
 };
 
-
   return (
-    
+      <>
+        <div className={styles.messageWrapper}>
+         {!selectedFile?    
+                         
+            <p>Please choose .xlsx file with data</p> :
+            <> 
+            <DoneIcon className={styles.successIcon}/>
+            <p className={styles.successMessage}>File {selectedFile?.name} was successfully added</p>
+            </>
+          }  
+        </div>
+ 
       <div  className={dragActive ? styles.dragNdropWrapperActive : styles.dragNdropWrapper}  onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}>
           <input 
             ref={inputRef}
             type="file"         
             id="file"
             name="file"
+            error={formik.errors.file}            
             className={styles.inputFileUpload}
             onChange={handleChange}
           />
           <label id="labelFileUpload" htmlFor="file">
             <div>
-              <> 
-            {!selectedFile?                  
-                <p>Drag and drop your file here or</p> :
-                <p>File {selectedFile?.name} was successfully added</p>
-             }   
+              <>                             
+                <p>Drag and drop your file here or</p> 
                 <button type="button"  className={styles.uploadButton} onClick={onButtonClick}>Browse</button>
               </>               
            
             </div> 
           </label>
         </div>
-
+</>
   );
 };
 
