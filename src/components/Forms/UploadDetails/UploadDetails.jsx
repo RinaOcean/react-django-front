@@ -74,28 +74,28 @@ const onButtonClick = () => {
 
             <div className={styles.inputWrapper}>
               <label htmlFor='hostName' >SFTP host name</label>
-              <input className={formik.errors.host_name && formik.touched.host_name ? styles.inputFieldError : styles.inputField} name='host_name' id='hostName' value={formik.values.host_name} onChange={formik.handleChange} />
+              <input className={formik.errors.host_name ? styles.inputFieldError : styles.inputField} name='host_name' id='hostName' value={formik.values.host_name} onChange={formik.handleChange} />
               {formik.errors && formik.touched ? (
                <div className={styles.errorMessage}>{formik.errors.host_name}</div>) : null}
             </div>
 
             <div className={styles.inputWrapper}>
               <label htmlFor='port' >SFTP port</label>
-              <input  className={formik.errors.port && formik.touched.port ? styles.inputFieldError : styles.inputField} name='port' id='port' value={formik.values.port} onChange={formik.handleChange}  />
+              <input  className={formik.errors.host_port ? styles.inputFieldError : styles.inputField} name='port' id='port' value={formik.values.port} onChange={formik.handleChange}  />
               {formik.errors && formik.touched ? (
                <div className={styles.errorMessage}>{formik.errors.host_port}</div>) : null}
             </div>
 
             <div className={styles.inputWrapper}>
               <label htmlFor='username' >SFTP username</label>
-              <input  className={formik.errors.username && formik.touched.username ? styles.inputFieldError : styles.inputField} name='username' id='username' value={formik.values.username} onChange={formik.handleChange}  />
+              <input  className={formik.errors.username ? styles.inputFieldError : styles.inputField} name='username' id='username' value={formik.values.username} onChange={formik.handleChange}  />
               {formik.errors && formik.touched ? (
                <div className={styles.errorMessage}>{formik.errors.username}</div>) : null}
             </div>
 
             <div className={styles.inputWrapper}>
               <label htmlFor='password' >Private SSH key password</label>
-              <input  className={formik.errors.password && formik.touched.password ? styles.inputFieldError : styles.inputField} name='password' id='password' value={formik.values.password} onChange={formik.handleChange} />
+              <input  className={formik.errors.password ? styles.inputFieldError : styles.inputField} name='password' id='password' value={formik.values.password} onChange={formik.handleChange} />
               {formik.errors && formik.touched ? (
                <div className={styles.errorMessage}>{formik.errors.password}</div>) : null}
             </div>
@@ -118,7 +118,7 @@ const onButtonClick = () => {
 
             <div className={styles.inputWrapper}>
               <label htmlFor='upload_path' >Upload path</label>
-              <input  className={formik.errors.upload_path && formik.touched.upload_path ? styles.inputFieldError : styles.inputField } name='upload_path' id='upload_path' value={formik.values.upload_path} onChange={formik.handleChange} />
+              <input  className={formik.errors.upload_path ? styles.inputFieldError : styles.inputField } name='upload_path' id='upload_path' value={formik.values.upload_path} onChange={formik.handleChange} />
               {formik.errors && formik.touched ? (
                <div className={styles.errorMessage}>{formik.errors.upload_path}</div>) : null}
             </div>
