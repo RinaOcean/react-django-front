@@ -8,6 +8,7 @@ import styles from './UploadDetails.module.css'
 
 import {FormContext} from "../../FormikStepper/FormikStepper";
 
+
 const Input = styled('input')({
   display: 'none',
 });
