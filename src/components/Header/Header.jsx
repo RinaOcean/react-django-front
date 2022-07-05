@@ -1,13 +1,17 @@
 import React from 'react'
 
-import "./header.css";
+import styles from './header.module.css'
 
-const Header = () => {
+const Header = (props) => {
   return (
-    <div className="header-container">
+    <div className={styles.container}>
       <h1 className="title">UCI</h1>
       <p className="description"> File download</p>
-      <button> </button>
+      {!props.isAuthenticated ?
+         <button className={styles.btn} onClick={()=>props.login()}>Login</button>
+      :  <button className={styles.btn} onClick={()=>props.logout()}>Logout</button>
+      
+    }
     </div>
   );
 };
