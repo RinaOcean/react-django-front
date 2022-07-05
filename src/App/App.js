@@ -66,7 +66,10 @@ class App extends React.Component {
           this.state.isAuthenticated ?
             <StepsForm/> :
             /*<button onClick={()=>this.login()}>Login</button>*/
-            <p>Login please</p>
+            <div >
+              <p>First, you should login :)</p>
+            </div>
+            
         }
      
       </div>
