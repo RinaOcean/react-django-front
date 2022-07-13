@@ -25,6 +25,7 @@ const UploadDetails = () => {
       .required('Required'),
     password: yup.string()
       .max(20, 'Too Long!'),
+    key: yup.mixed().test('fileType', "Only .pem extension is allowed ", value => value.name.includes('.pem') ),
     upload_path: yup.string()
       .max(100, 'Too Long!')
       .required('Required'),
@@ -45,12 +46,18 @@ const UploadDetails = () => {
 
   const handleChange = async function(e) {
     e.preventDefault();
-    if (e.target.files &&e.target.files[0]) {       
+
+    if (e.target.files && e.target.files[0]) {         
       const keyFile = new FormData();
       keyFile.append("key", e.target.files[0]);     
-      formik.setFieldValue('key', e.target.files[0]);
-      setSelectedKey(true)
-      setActiveBtn(true)
+      formik.setFieldValue('key', e.target.files[0]);            
+      if (e.target.files[0].name.includes('.pem')) {
+        setSelectedKey(true)
+       
+        setActiveBtn(true)
+      } else  {
+        setSelectedKey(false)
+      }
       // try {
       //   const res = await axios.post("http://127.0.0.1:8000//sftp_upload/", keyFile)
       //   formik.setFieldValue('key', e.target.files[0]);
@@ -59,6 +66,10 @@ const UploadDetails = () => {
       //   console.log(e);
       // }      
     }  
+    // if (formik.errors) {
+    //   setActiveBtn(false)
+    // }  
+    console.log(formik.errors, formik.touched);
   };
 
   // triggers the input when the button is clicked
@@ -110,9 +121,11 @@ const onButtonClick = () => {
                 className={styles.keyUpload}          
                 onChange={handleChange}
               />
+              {formik.errors && formik.touched ? (
+               <div className={styles.errorMessage}>{formik.errors.key}</div>) : null}
               <div>           
                 <button type="button"  onClick={onButtonClick}>Browse</button> 
-                {!formik.values.key? <span className={styles.selectedKey}>file is not selected</span> : <span className={styles.selectedKey}>{formik.values.key.name}</span>}                               
+                {!selectedKey ? <span className={styles.selectedKey}>file is not selected</span> : <span className={styles.selectedKey}>{formik.values.key?.name}</span>}                               
               </div> 
             </div>      
 
