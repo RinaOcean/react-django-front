@@ -50,6 +50,7 @@ const UploadFile = () => {
         formik.setFieldValue('file', e.dataTransfer.files[0]);
         setSelectedFile(file.get('file'))   
         setActiveBtn(true)
+        setIsFailed(false)
         
       } catch (e) {
         setIsFailed(true);
