@@ -68,10 +68,11 @@ const UploadFile = () => {
       file.append("file", e.target.files[0]);     
       formik.setFieldValue('file', e.target.files[0]);
       try {
-        const res = await axios.post("http://127.0.0.1:8000/file_upload/", file)
+        await axios.post("http://127.0.0.1:8000/file_upload/", file)
         formik.setFieldValue('file', e.target.files[0]);
         setSelectedFile(file.get('file'))    
         setActiveBtn(true) 
+        setIsFailed(false)
       } catch (e) {
         setIsFailed(true);
         setErrorMessage(e.response.data.errors.file[0])

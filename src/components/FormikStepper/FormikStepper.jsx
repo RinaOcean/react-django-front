@@ -2,6 +2,8 @@ import { Stepper, Typography, Step, StepLabel, Box, Card, CardContent } from '@m
 import { Form, Formik } from 'formik';
 import React, { useState, createContext } from 'react';
 import axios from 'axios';
+import DoneIcon from '@mui/icons-material/Done';
+
 import styles from './FormikStepper.module.css';
 
 export const FormContext = createContext();
@@ -27,7 +29,6 @@ const submitHandler = async (e) => {
   e.preventDefault()
   setActiveBtn(false)
   if(step === childrenArray.length - 1) {
-        console.log("ok");
         const formData = new FormData(e.target);
         const formProps = Object.fromEntries(formData);
         console.log("from submitHandler inFormikStepper====>>>>> ", formProps );
@@ -36,9 +37,11 @@ const submitHandler = async (e) => {
           const res = await axios.post("http://127.0.0.1:8000/sftp_upload/", formData)
           console.log(res);
           setCompleted(true)
-          
+          setIsFailed(false)
+          setStep(s => s+1)
         } catch (e) {
-          console.log(e);
+          setIsFailed(true);
+          setErrorMessage(e.response.data.errors.file[0])
         }
       }else{
         setStep(s => s+1)
@@ -57,17 +60,7 @@ return (
             
       <Formik {...props}>
         <Form className={styles.form} autoComplete='off' onSubmit={(e) => submitHandler(e)}  encType="multipart/form-data">
-        {/* stepper
-        <Box sx={{ width: '100%' }}>
-          <Stepper activeStep={step} alternativeLabel>
-            {childrenArray.map((child, index) => (
-              <Step key={child.props.label} completed={step > index || completed}  >
-                <StepLabel>{child.props.label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>       
-        </Box> */}
-
+      
         <Box sx={{ width: '100%' }}>
       <Stepper activeStep={step}>
         {childrenArray.map((child, index) => {
@@ -95,19 +88,25 @@ return (
             
            <Card>
              <CardContent>
-                {!completed? currentChild : <p>Successfully Uploaded</p>} 
+                {!completed? currentChild :
+                 <div className={styles.messageWrapper}> 
+                 <DoneIcon className={styles.successIcon}/>
+                 <p className={styles.successMessage}>File is successfully uploaded</p>
+                 </div>
+                }
              </CardContent>
            </Card>
          
            
            {/* Buttons */}
-           <div className={styles.buttonsWrapper}>
-             <button
-                type="button" 
-                className={step>0 ? styles.button : styles.buttonInvis}
-                onClick={()=>setStep(s=>s-1)}         
-              >
-               back
+           {!completed? 
+             <div className={styles.buttonsWrapper}>
+              <button
+                 type="button" 
+                 className={step>0 ? styles.button : styles.buttonInvis}
+                 onClick={()=>setStep(s=>s-1)}         
+               >
+                 back
               </button>
               <button
                  className={!activeBtn? styles.buttonNotActive : styles.buttonActive}                
@@ -115,7 +114,20 @@ return (
               >
                 {isLastStep()? 'submit' : 'next'}
               </button>
-            </div> 
+              </div>  :                 
+              <button
+                type="button" 
+                className={styles.buttonUploadMore}
+                onClick={()=> {
+                  setStep(0)
+                  setSelectedFile(null)
+                  setCompleted(false)
+                }}         
+              >
+                UploadMore
+              </button>
+            }
+           
         </Form>       
       </Formik>
     </FormContext.Provider>

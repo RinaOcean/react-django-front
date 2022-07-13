@@ -62,15 +62,8 @@ class App extends React.Component {
     return (
       <div className="app">
         <Header login={this.login} isAuthenticated={this.state.isAuthenticated} logout={this.logout}/> 
-        {
-          this.state.isAuthenticated ?
-            <StepsForm/> :
-            /*<button onClick={()=>this.login()}>Login</button>*/
-            <div >
-              <p>First, you should login :)</p>
-            </div>
-            
-        }
+        
+        <StepsForm/> 
      
       </div>
     )

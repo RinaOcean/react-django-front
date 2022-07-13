@@ -23,13 +23,18 @@
   visibility: hidden;
 }
 
-.buttonActive {
+.buttonActive,
+.buttonUploadMore {
   border-style: none;
   border: solid 2px #006bb6;
   padding: 10px 20px;
   background-color: white;
   color: #006bb6;
   cursor: pointer;
+}
+
+.buttonUploadMore {
+  margin-top: 30px;
 }
 
 .buttonNotActive {
@@ -42,3 +47,16 @@
   color: #b6b6b6;  
 }
 
+.messageWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.successIcon {
+  color: rgb(0, 179, 89);
+}
+
+.successMessage {
+  margin-left: 10px;
+}

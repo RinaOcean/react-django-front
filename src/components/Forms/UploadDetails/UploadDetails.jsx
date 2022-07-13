@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import { useFormik } from 'formik';
-import { Card, CardContent } from '@mui/material';
 import * as yup from "yup";
 import styles from './UploadDetails.module.css'
 
@@ -47,13 +46,13 @@ const UploadDetails = () => {
   const handleChange = async function(e) {
     e.preventDefault();
     if (e.target.files &&e.target.files[0]) {       
-      // const keyFile = new FormData();
-      // keyFile.append("key", e.target.files[0]);     
+      const keyFile = new FormData();
+      keyFile.append("key", e.target.files[0]);     
       formik.setFieldValue('key', e.target.files[0]);
       setSelectedKey(true)
       setActiveBtn(true)
       // try {
-      //   const res = await axios.post("http://127.0.0.1:8000/file_upload/", file)
+      //   const res = await axios.post("http://127.0.0.1:8000//sftp_upload/", keyFile)
       //   formik.setFieldValue('key', e.target.files[0]);
       //   setSelectedFile(keyFile.get('file'))     
       // } catch (e) {
