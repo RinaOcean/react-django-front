@@ -20,6 +20,7 @@ const UploadFile = () => {
   validationSchema: ValidationSchema,
   initialValues: {
       file: selectedFile,
+      session_key: '',
   }
 });
 
@@ -69,8 +70,10 @@ const UploadFile = () => {
       file.append("file", e.target.files[0]);     
       formik.setFieldValue('file', e.target.files[0]);
       try {
-        await axios.post("http://127.0.0.1:8000/file_upload/", file)
+        const res =  await axios.post("http://127.0.0.1:8000/file_upload/", file)
+        console.log(res.data.session_key);
         formik.setFieldValue('file', e.target.files[0]);
+        formik.setFieldValue('session_key', res.data.session_key);
         setSelectedFile(file.get('file'))    
         setActiveBtn(true) 
         setIsFailed(false)

@@ -31,7 +31,7 @@ const submitHandler = async (e) => {
   if(step === childrenArray.length - 1) {
         const formData = new FormData(e.target);
         const formProps = Object.fromEntries(formData);
-        console.log("from submitHandler inFormikStepper====>>>>> ", formProps );
+        console.log("from submitHandler inFormikStepper step2====>>>>> ", formProps );
 
         try {
           const res = await axios.post("http://127.0.0.1:8000/sftp_upload/", formData)
@@ -44,6 +44,16 @@ const submitHandler = async (e) => {
           // setErrorMessage(e.response.data.errors.file[0])
         }
       }else{
+        try {
+          const formData = new FormData(e.target);
+          const formProps = Object.fromEntries(formData);
+          console.log("from submitHandler inFormikStepper step1====>>>>> ", formProps );
+          const res = await axios.post("http://127.0.0.1:8000/file_upload/", formData)
+          console.log("from submitHandler inFormikStepper step1 res ====>>>>> ",res);
+          
+        } catch (e) {
+          setIsFailed(true);
+        }
         setStep(s => s+1)
       }
      }
