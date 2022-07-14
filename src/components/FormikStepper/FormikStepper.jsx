@@ -45,9 +45,7 @@ const FormikStepper = ({children, ...props}) => {
       
     }else if (step === childrenArray.length - 1) {
       const formData = new FormData(e.target);
-      formData.append('session_key', sessionKey)
-      const formProps = Object.fromEntries(formData);
-      console.log("from submitHandler inFormikStepper step2====>>>>> ", formProps );
+      formData.append('session_key', sessionKey)     
 
       try {
         const res = await axios.post("http://127.0.0.1:8000/sftp_upload/", formData)

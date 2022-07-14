@@ -26,12 +26,15 @@ const UploadDetails = () => {
       .required('Required'),
     password: yup.string()
       .max(20, 'Too Long!'),
-    key: yup.mixed().test('fileType', "Only .pem extension is allowed ", value => value?.name?.includes('.pem') ),
+    key: yup.mixed().test('fileType', "Only .pem extension is allowed ", value => ["pem", ""].includes(value?.type)),
     upload_path: yup.string()
       .max(100, 'Too Long!')
       .required('Required'),
   });
+//  const extension = value?.name?.substr(value?.name?.lastIndexOf('.') + 1).toLowerCase();  
+//       const allowedExtensions = ['pem', ''];   
 
+//       return !allowedExtensions.indexOf(extension) === -1
   const formik = useFormik({
     enableReinitialize: false,
     validationSchema: ValidationSchema,
@@ -51,8 +54,9 @@ const UploadDetails = () => {
     if (e.target.files && e.target.files[0]) {         
       const keyFile = new FormData();
       keyFile.append("key", e.target.files[0]);     
-      formik.setFieldValue('key', e.target.files[0]);            
-      if (e.target.files[0].name.includes('.pem')) {
+      formik.setFieldValue('key', e.target.files[0]);
+      
+      if (["pem", ""].includes(e.target.files[0].type)) {
         setSelectedKey(true)       
         setActiveBtn(true)
       } else  {
