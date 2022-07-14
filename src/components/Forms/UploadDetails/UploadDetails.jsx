@@ -31,10 +31,7 @@ const UploadDetails = () => {
       .max(100, 'Too Long!')
       .required('Required'),
   });
-//  const extension = value?.name?.substr(value?.name?.lastIndexOf('.') + 1).toLowerCase();  
-//       const allowedExtensions = ['pem', ''];   
-
-//       return !allowedExtensions.indexOf(extension) === -1
+  
   const formik = useFormik({
     enableReinitialize: false,
     validationSchema: ValidationSchema,
