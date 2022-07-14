@@ -36,14 +36,11 @@ const UploadFile = () => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {       
-      const file = new FormData(); 
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) { 
       
       if (e.dataTransfer.files[0].name.includes('.xlsx')){
-        file.append("file", e.dataTransfer.files[0]);     
         formik.setFieldValue('file', e.dataTransfer.files[0]);
-        // console.log("drag n drop file", formik.values.file);
-        setSelectedFile(file.get('file')) 
+        setSelectedFile(e.dataTransfer.files[0]) 
         setActiveBtn(true) 
         setIsFailed(false)
       }else {
@@ -59,13 +56,11 @@ const UploadFile = () => {
   // triggers when file is selected with click
   const handleChange = async function(e) {
     e.preventDefault();
-    if (e.target.files && e.target.files[0]) {       
-      const file = new FormData();
+    if (e.target.files && e.target.files[0]) {
 
-      if (e.target.files[0].name.includes('.xlsx')){
-        file.append("file", e.target.files[0]);     
-        formik.setFieldValue('file', e.target.files[0]);
-        setSelectedFile(file.get('file')) 
+      if (e.target.files[0].name.includes('.xlsx')){  
+        formik.setFieldValue('file', e.target.files[0]);     
+        setSelectedFile(e.target.files[0]) 
         setActiveBtn(true) 
         setIsFailed(false)
       }else {

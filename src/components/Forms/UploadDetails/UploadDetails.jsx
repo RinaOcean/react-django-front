@@ -42,7 +42,6 @@ const UploadDetails = () => {
       password: '',
       key: null,
       upload_path: '/inbox/',
-      session_key: sessionKey,
     }
   });
 
@@ -54,24 +53,13 @@ const UploadDetails = () => {
       keyFile.append("key", e.target.files[0]);     
       formik.setFieldValue('key', e.target.files[0]);            
       if (e.target.files[0].name.includes('.pem')) {
-        setSelectedKey(true)
-       
+        setSelectedKey(true)       
         setActiveBtn(true)
       } else  {
         setSelectedKey(false)
-      }
-      // try {
-      //   const res = await axios.post("http://127.0.0.1:8000//sftp_upload/", keyFile)
-      //   formik.setFieldValue('key', e.target.files[0]);
-      //   setSelectedFile(keyFile.get('file'))     
-      // } catch (e) {
-      //   console.log(e);
-      // }      
+        setActiveBtn(false)
+      }     
     }  
-    if (formik.errors) {
-      setActiveBtn(false)
-    }  
-    console.log(formik.errors);
   };
 
   // triggers the input when the button is clicked
