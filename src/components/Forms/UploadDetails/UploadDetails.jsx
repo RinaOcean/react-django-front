@@ -6,6 +6,7 @@ import * as yup from "yup";
 import styles from './UploadDetails.module.css'
 
 import {FormContext} from "../../FormikStepper/FormikStepper";
+import { useEffect } from 'react';
 
 
 const Input = styled('input')({
@@ -13,7 +14,7 @@ const Input = styled('input')({
 });
 
 const UploadDetails = () => {
-  const { step, setStep, selectedFile, setSelectedFile, selectedKey, setSelectedKey, activeBtn, setActiveBtn  } = useContext(FormContext);
+  const { step, setStep, selectedFile, setSelectedFile, sessionKey, setSessionKey, selectedKey, setSelectedKey, activeBtn, setActiveBtn  } = useContext(FormContext);
   const inputRef = React.useRef(null);
 
   const ValidationSchema = yup.object().shape({
@@ -25,12 +26,12 @@ const UploadDetails = () => {
       .required('Required'),
     password: yup.string()
       .max(20, 'Too Long!'),
-    key: yup.mixed().test('fileType', "Only .pem extension is allowed ", value => value.name.includes('.pem') ),
+    key: yup.mixed().test('fileType', "Only .pem extension is allowed ", value => ["pem", ""].includes(value?.type)),
     upload_path: yup.string()
       .max(100, 'Too Long!')
       .required('Required'),
   });
-
+  
   const formik = useFormik({
     enableReinitialize: false,
     validationSchema: ValidationSchema,
@@ -40,36 +41,26 @@ const UploadDetails = () => {
       username: 'tester',
       password: '',
       key: null,
-      upload_path: '/inbox/'
+      upload_path: '/inbox/',
     }
   });
 
-  const handleChange = async function(e) {
+  const handleChange = function(e) {
     e.preventDefault();
 
     if (e.target.files && e.target.files[0]) {         
       const keyFile = new FormData();
       keyFile.append("key", e.target.files[0]);     
-      formik.setFieldValue('key', e.target.files[0]);            
-      if (e.target.files[0].name.includes('.pem')) {
-        setSelectedKey(true)
-       
+      formik.setFieldValue('key', e.target.files[0]);
+      
+      if (["pem", ""].includes(e.target.files[0].type)) {
+        setSelectedKey(true)       
         setActiveBtn(true)
       } else  {
         setSelectedKey(false)
-      }
-      // try {
-      //   const res = await axios.post("http://127.0.0.1:8000//sftp_upload/", keyFile)
-      //   formik.setFieldValue('key', e.target.files[0]);
-      //   setSelectedFile(keyFile.get('file'))     
-      // } catch (e) {
-      //   console.log(e);
-      // }      
+        setActiveBtn(false)
+      }     
     }  
-    // if (formik.errors) {
-    //   setActiveBtn(false)
-    // }  
-    console.log(formik.errors, formik.touched);
   };
 
   // triggers the input when the button is clicked

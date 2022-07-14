@@ -10,14 +10,9 @@ const UploadFile = () => {
   const { step, setStep, selectedFile, setSelectedFile, activeBtn, setActiveBtn, isFailed, setIsFailed, errorMessage, setErrorMessage, } = useContext(FormContext);
   
   const inputRef = React.useRef(null);
-  
-  const ValidationSchema = yup.object().shape({
-    file: yup.mixed().required('File is required')
-  })
-  
+    
   const formik = useFormik({
   enableReinitialize: false,
-  validationSchema: ValidationSchema,
   initialValues: {
       file: selectedFile,
   }
@@ -41,22 +36,19 @@ const UploadFile = () => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {       
-      const file = new FormData();
-      file.append("file", e.dataTransfer.files[0]);     
-    
-      try {
-        const res = await axios.post("http://127.0.0.1:8000/file_upload/", file)
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) { 
+      
+      if (e.dataTransfer.files[0].name.includes('.xlsx')){
         formik.setFieldValue('file', e.dataTransfer.files[0]);
-        setSelectedFile(file.get('file'))   
-        setActiveBtn(true)
+        setSelectedFile(e.dataTransfer.files[0]) 
+        setActiveBtn(true) 
         setIsFailed(false)
-        
-      } catch (e) {
+      }else {
+        setSelectedFile(null) 
+        setActiveBtn(false) 
         setIsFailed(true);
-        setErrorMessage(e.response.data.errors.file[0])
-        
-      }      
+        setErrorMessage('Allowed extension is .xlsx only')
+      }       
       
     }  
   };
@@ -64,20 +56,19 @@ const UploadFile = () => {
   // triggers when file is selected with click
   const handleChange = async function(e) {
     e.preventDefault();
-    if (e.target.files &&e.target.files[0]) {       
-      const file = new FormData();
-      file.append("file", e.target.files[0]);     
-      formik.setFieldValue('file', e.target.files[0]);
-      try {
-        await axios.post("http://127.0.0.1:8000/file_upload/", file)
-        formik.setFieldValue('file', e.target.files[0]);
-        setSelectedFile(file.get('file'))    
+    if (e.target.files && e.target.files[0]) {
+
+      if (e.target.files[0].name.includes('.xlsx')){  
+        formik.setFieldValue('file', e.target.files[0]);     
+        setSelectedFile(e.target.files[0]) 
         setActiveBtn(true) 
         setIsFailed(false)
-      } catch (e) {
+      }else {
+        setSelectedFile(null) 
+        setActiveBtn(false) 
         setIsFailed(true);
-        setErrorMessage(e.response.data.errors.file[0])
-      }      
+        setErrorMessage('Allowed extension is .xlsx only')
+      }    
     }  
   };
 
