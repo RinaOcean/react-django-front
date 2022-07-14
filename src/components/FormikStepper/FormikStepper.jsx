@@ -12,6 +12,7 @@ const FormikStepper = ({children, ...props}) => {
   const childrenArray = React.Children.toArray(children)
   const [step, setStep] = useState(0)
   const [selectedFile, setSelectedFile] = useState(null);
+  const [sessionKey, setSessionKey] = useState(null)
   const [selectedKey, setSelectedKey] = useState(null);
   const [completed, setCompleted] = useState(false)
   const [activeBtn, setActiveBtn] = useState(false)
@@ -25,48 +26,49 @@ const FormikStepper = ({children, ...props}) => {
     return step === childrenArray.length - 1
   }
 
-const submitHandler = async (e) => {
-  e.preventDefault()
-  setActiveBtn(false)
-  if(step === childrenArray.length - 1) {
-        const formData = new FormData(e.target);
-        const formProps = Object.fromEntries(formData);
-        console.log("from submitHandler inFormikStepper step2====>>>>> ", formProps );
+  const submitHandler = async (e) => {
+    e.preventDefault()
+    setActiveBtn(false)
+    if (step === 0){
 
-        try {
-          const res = await axios.post("http://127.0.0.1:8000/sftp_upload/", formData)
-          console.log(res);
-          setCompleted(true)
-          setIsFailed(false)
-          setStep(s => s+1)
-        } catch (e) {
-          setIsFailed(true);
-          // setErrorMessage(e.response.data.errors.file[0])
-        }
-      }else{
-        try {
-          const formData = new FormData(e.target);
-          const formProps = Object.fromEntries(formData);
-          console.log("from submitHandler inFormikStepper step1====>>>>> ", formProps );
-          const res = await axios.post("http://127.0.0.1:8000/file_upload/", formData)
-          console.log("from submitHandler inFormikStepper step1 res ====>>>>> ",res);
-          
-        } catch (e) {
-          setIsFailed(true);
-        }
+      const file = new FormData();
+      file.append("file", selectedFile);    
+      try {
+        const res = await axios.post("http://127.0.0.1:8000/file_upload/", file)
+        const sessKey = res.data?.session_key;
+        setSessionKey(sessKey);
         setStep(s => s+1)
+      } catch (e) {
+        setIsFailed(true);
+        setErrorMessage(e.response.data.errors.file[0])
       }
-     }
-
-     const isStepFailed = (step) => {
-       if (isFailed) {
-         return step === currentStep;
-       }
       
-    };
+    }else if (step === childrenArray.length - 1) {
+      const formData = new FormData(e.target);
+      const formProps = Object.fromEntries(formData);
+      console.log("from submitHandler inFormikStepper step2====>>>>> ", formProps );
+
+      try {
+        const res = await axios.post("http://127.0.0.1:8000/sftp_upload/", formData)
+        console.log(res);
+        setCompleted(true)
+        setIsFailed(false)
+        setStep(s => s+1)
+      } catch (e) {
+        setIsFailed(true);
+        // setErrorMessage(e.response.data.errors.file[0])
+      }
+    }    
+  }
+
+  const isStepFailed = (step) => {
+    if (isFailed) {
+      return step === currentStep;
+    }      
+  };
  
 return (
-    <FormContext.Provider value={{step, setStep, isFailed, setIsFailed, errorMessage, setErrorMessage, selectedFile, setSelectedFile, selectedKey, setSelectedKey, activeBtn, setActiveBtn}} >
+    <FormContext.Provider value={{step, setStep, isFailed, setIsFailed, errorMessage, setErrorMessage, selectedFile, setSelectedFile, sessionKey, setSessionKey, selectedKey, setSelectedKey, activeBtn, setActiveBtn}} >
             
       <Formik {...props}>
         <Form className={styles.form} autoComplete='off' onSubmit={(e) => submitHandler(e)}  encType="multipart/form-data">
@@ -114,7 +116,10 @@ return (
               <button
                  type="button" 
                  className={step>0 ? styles.button : styles.buttonInvis}
-                 onClick={()=>setStep(s=>s-1)}         
+                 onClick={() => {
+                   setStep(s=>s-1)
+                   setSelectedFile(null)
+                  }}       
                >
                  back
               </button>

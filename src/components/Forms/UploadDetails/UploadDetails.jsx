@@ -14,7 +14,7 @@ const Input = styled('input')({
 });
 
 const UploadDetails = () => {
-  const { step, setStep, selectedFile, setSelectedFile, selectedKey, setSelectedKey, activeBtn, setActiveBtn  } = useContext(FormContext);
+  const { step, setStep, selectedFile, setSelectedFile, sessionKey, setSessionKey, selectedKey, setSelectedKey, activeBtn, setActiveBtn  } = useContext(FormContext);
   const inputRef = React.useRef(null);
 
   const ValidationSchema = yup.object().shape({
@@ -41,7 +41,8 @@ const UploadDetails = () => {
       username: 'tester',
       password: '',
       key: null,
-      upload_path: '/inbox/'
+      upload_path: '/inbox/',
+      session_key: sessionKey,
     }
   });
 
