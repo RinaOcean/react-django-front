@@ -41,7 +41,7 @@ const submitHandler = async (e) => {
           setStep(s => s+1)
         } catch (e) {
           setIsFailed(true);
-          setErrorMessage(e.response.data.errors.file[0])
+          // setErrorMessage(e.response.data.errors.file[0])
         }
       }else{
         setStep(s => s+1)
@@ -54,7 +54,7 @@ const submitHandler = async (e) => {
        }
       
     };
-
+ 
 return (
     <FormContext.Provider value={{step, setStep, isFailed, setIsFailed, errorMessage, setErrorMessage, selectedFile, setSelectedFile, selectedKey, setSelectedKey, activeBtn, setActiveBtn}} >
             

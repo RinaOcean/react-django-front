@@ -6,6 +6,7 @@ import * as yup from "yup";
 import styles from './UploadDetails.module.css'
 
 import {FormContext} from "../../FormikStepper/FormikStepper";
+import { useEffect } from 'react';
 
 
 const Input = styled('input')({
@@ -25,7 +26,7 @@ const UploadDetails = () => {
       .required('Required'),
     password: yup.string()
       .max(20, 'Too Long!'),
-    key: yup.mixed().test('fileType', "Only .pem extension is allowed ", value => value.name.includes('.pem') ),
+    key: yup.mixed().test('fileType', "Only .pem extension is allowed ", value => value?.name?.includes('.pem') ),
     upload_path: yup.string()
       .max(100, 'Too Long!')
       .required('Required'),
@@ -44,7 +45,7 @@ const UploadDetails = () => {
     }
   });
 
-  const handleChange = async function(e) {
+  const handleChange = function(e) {
     e.preventDefault();
 
     if (e.target.files && e.target.files[0]) {         
@@ -66,10 +67,10 @@ const UploadDetails = () => {
       //   console.log(e);
       // }      
     }  
-    // if (formik.errors) {
-    //   setActiveBtn(false)
-    // }  
-    console.log(formik.errors, formik.touched);
+    if (formik.errors) {
+      setActiveBtn(false)
+    }  
+    console.log(formik.errors);
   };
 
   // triggers the input when the button is clicked
