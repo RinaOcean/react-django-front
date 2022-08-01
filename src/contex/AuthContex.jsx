@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from "react";
-import jwt_decode from "jwt_decode";
-import { useHistory } from "react-router=dom";
-import { useState } from "react";
+import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 import { REG_URL, TOKEN_URL } from "../utils/Urls";
 
 const AuthContext = createContext();
@@ -18,13 +17,13 @@ export const AuthProvider = ({ children }) => {
 
     const [loading, setLoading] = useState(true);
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const loginUser = async (username, password) => {
         const response = await fetch(TOKEN_URL, {
             method: "POST",
             headers: {
-                "Content-Type": "applicaation/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 username,
@@ -38,7 +37,7 @@ export const AuthProvider = ({ children }) => {
             setAuthTokens(data);
             setUser(jwt_decode(data.access));
             localStorage.setItem("authTokens", JSON.stringify(data));
-            history.push("/")
+            navigate("/file-upload");
         } else {
             alert("Something went wrong!");
         }
@@ -58,7 +57,7 @@ export const AuthProvider = ({ children }) => {
             })
         });
         if (response.status === 201) {
-            history.push("/login");
+            navigate("/login");
         } else {
 
             alert("Somthing went wrong!");
@@ -69,7 +68,7 @@ export const AuthProvider = ({ children }) => {
         setAuthTokens(null);
         setUser(null);
         localStorage.removeItem("authTokens");
-        history.push("/");
+        navigate("/");
     };
 
     const contextData = {
