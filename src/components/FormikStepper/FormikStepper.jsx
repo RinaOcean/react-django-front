@@ -1,151 +1,182 @@
-import { Stepper, Typography, Step, StepLabel, Box, Card, CardContent } from '@material-ui/core';
-import { Form, Formik } from 'formik';
-import React, { useState, createContext } from 'react';
-import axios from 'axios';
-import DoneIcon from '@mui/icons-material/Done';
-import { UPLOAD_URL } from '../../utils/Urls';
+import {
+  Stepper,
+  Typography,
+  Step,
+  StepLabel,
+  Box,
+  Card,
+  CardContent,
+} from "@material-ui/core";
+import { Form, Formik } from "formik";
+import React, { useState, createContext } from "react";
+import axios from "axios";
+import DoneIcon from "@mui/icons-material/Done";
+import { UPLOAD_URL } from "../../utils/Urls";
 
-import styles from './FormikStepper.module.css';
+import styles from "./FormikStepper.module.css";
 
 export const FormContext = createContext();
 
-const FormikStepper = ({children, ...props}) => {
-  const childrenArray = React.Children.toArray(children)
-  const [step, setStep] = useState(0)
+const FormikStepper = ({ children, ...props }) => {
+  const childrenArray = React.Children.toArray(children);
+  const [step, setStep] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [sessionKey, setSessionKey] = useState(null)
+  const [sessionKey, setSessionKey] = useState(null);
   const [selectedKey, setSelectedKey] = useState(null);
-  const [completed, setCompleted] = useState(false)
-  const [activeBtn, setActiveBtn] = useState(false)
+  const [completed, setCompleted] = useState(false);
+  const [activeBtn, setActiveBtn] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [isFailed, setIsFailed] = useState(false)
-  const currentChild = childrenArray[step]
-  const currentStep = step
- 
-  function isLastStep () {
-    return step === childrenArray.length - 1
+  const [isFailed, setIsFailed] = useState(false);
+  const currentChild = childrenArray[step];
+  const currentStep = step;
+
+  function isLastStep() {
+    return step === childrenArray.length - 1;
   }
 
   const submitHandler = async (e) => {
-    e.preventDefault()
-    setActiveBtn(false)
-    if (step === 0){
-
+    e.preventDefault();
+    setActiveBtn(false);
+    if (step === 0) {
       const file = new FormData();
-      file.append("file", selectedFile);    
+      file.append("file", selectedFile);
       try {
-        const res = await axios.post(`${UPLOAD_URL}file_upload/`, file)
+        const res = await axios.post(`${UPLOAD_URL}file_upload/`, file);
         const sessKey = res.data?.session_key;
         setSessionKey(sessKey);
-        setStep(s => s+1)
+        setStep((s) => s + 1);
       } catch (e) {
         setIsFailed(true);
-        setErrorMessage(e.response.data.errors.file[0])
+        setErrorMessage(e.response.data.errors.file[0]);
       }
-      
-    }else if (step === childrenArray.length - 1) {
+    } else if (step === childrenArray.length - 1) {
       const formData = new FormData(e.target);
-      formData.append('session_key', sessionKey)     
+      formData.append("session_key", sessionKey);
 
       try {
-        const res = await axios.post(`${UPLOAD_URL}sftp_upload/`, formData)
+        const res = await axios.post(`${UPLOAD_URL}sftp_upload/`, formData);
         console.log(res);
-        setCompleted(true)
-        setIsFailed(false)
-        setStep(s => s+1)
+        setCompleted(true);
+        setIsFailed(false);
+        setStep((s) => s + 1);
       } catch (e) {
         setIsFailed(true);
         // setErrorMessage(e.response.data.errors.file[0])
       }
-    }    
-  }
+    }
+  };
 
   const isStepFailed = (step) => {
     if (isFailed) {
       return step === currentStep;
-    }      
+    }
   };
- 
-return (
-    <FormContext.Provider value={{step, setStep, isFailed, setIsFailed, errorMessage, setErrorMessage, selectedFile, setSelectedFile, sessionKey, setSessionKey, selectedKey, setSelectedKey, activeBtn, setActiveBtn}} >
-            
+
+  return (
+    <FormContext.Provider
+      value={{
+        step,
+        setStep,
+        isFailed,
+        setIsFailed,
+        errorMessage,
+        setErrorMessage,
+        selectedFile,
+        setSelectedFile,
+        sessionKey,
+        setSessionKey,
+        selectedKey,
+        setSelectedKey,
+        activeBtn,
+        setActiveBtn,
+      }}
+    >
       <Formik {...props}>
-        <Form className={styles.form} autoComplete='off' onSubmit={(e) => submitHandler(e)}  encType="multipart/form-data">
-      
-        <Box sx={{ width: '100%' }}>
-      <Stepper activeStep={step}>
-        {childrenArray.map((child, index) => {
-          const labelProps = {};
-          if (isStepFailed(index)) {
-            labelProps.optional = (
-              <Typography variant="caption" color="error">
-                {errorMessage}
-              </Typography>
-            );
+        <Form
+          className={styles.form}
+          autoComplete="off"
+          onSubmit={(e) => submitHandler(e)}
+          encType="multipart/form-data"
+        >
+          <Box sx={{ width: "100%" }}>
+            <Stepper activeStep={step}>
+              {childrenArray.map((child, index) => {
+                const labelProps = {};
+                if (isStepFailed(index)) {
+                  labelProps.optional = (
+                    <Typography variant="caption" color="error">
+                      {errorMessage}
+                    </Typography>
+                  );
 
-            labelProps.error = true;
-          }
-
-          return (
-            <Step key={child.props.label}>
-              <StepLabel {...labelProps}>{child.props.label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-    </Box>
-          
-          {/* piece of form */}
-            
-           <Card>
-             <CardContent>
-                {!completed? currentChild :
-                 <div className={styles.messageWrapper}> 
-                 <DoneIcon className={styles.successIcon}/>
-                 <p className={styles.successMessage}>File is successfully uploaded</p>
-                 </div>
+                  labelProps.error = true;
                 }
-             </CardContent>
-           </Card>
-         
-           
-           {/* Buttons */}
-           {!completed? 
-             <div className={styles.buttonsWrapper}>
+
+                return (
+                  <Step key={child.props.label}>
+                    <StepLabel {...labelProps}>{child.props.label}</StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>
+          </Box>
+
+          {/* piece of form */}
+
+          <Card>
+            <CardContent>
+              {!completed ? (
+                currentChild
+              ) : (
+                <div className={styles.messageWrapper}>
+                  <DoneIcon className={styles.successIcon} />
+                  <p className={styles.successMessage}>
+                    File is successfully uploaded
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Buttons */}
+          {!completed ? (
+            <div className={styles.buttonsWrapper}>
               <button
-                 type="button" 
-                 className={step>0 ? styles.button : styles.buttonInvis}
-                 onClick={() => {
-                   setStep(s=>s-1)
-                   setSelectedFile(null)
-                  }}       
-               >
-                 back
-              </button>
-              <button
-                 className={!activeBtn? styles.buttonNotActive : styles.buttonActive}                
-                 type="submit"                        
+                type="button"
+                className={step > 0 ? styles.button : styles.buttonInvis}
+                onClick={() => {
+                  setStep((s) => s - 1);
+                  setSelectedFile(null);
+                }}
               >
-                {isLastStep()? 'submit' : 'next'}
+                back
               </button>
-              </div>  :                 
               <button
-                type="button" 
-                className={styles.buttonUploadMore}
-                onClick={()=> {
-                  setStep(0)
-                  setSelectedFile(null)
-                  setCompleted(false)
-                }}         
+                className={
+                  !activeBtn ? styles.buttonNotActive : styles.buttonActive
+                }
+                type="submit"
               >
-                UploadMore
+                {isLastStep() ? "submit" : "next"}
               </button>
-            }
-           
-        </Form>       
+            </div>
+          ) : (
+            <button
+              type="button"
+              className={styles.buttonUploadMore}
+              onClick={() => {
+                setStep(0);
+                setSelectedFile(null);
+                setCompleted(false);
+              }}
+            >
+              UploadMore
+            </button>
+          )}
+        </Form>
       </Formik>
     </FormContext.Provider>
-  )
-}
-export default FormikStepper
+  );
+};
+export default FormikStepper;
