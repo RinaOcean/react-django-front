@@ -22,8 +22,6 @@ const  App = () => {
                         path="/file-upload"
                         element={<PrivateRoute Component={StepsForm} />}
                     />
-                    {/* <PrivateRoute element={<StepsForm />} path="/file-upload" /> */}
-                    {/* <Route element={<StepsForm />} path="/" /> */}
                     <Route element={<LoginPage />} path="/login" />
                     <Route element={<Register />} path="/register" />
                 </Routes>
