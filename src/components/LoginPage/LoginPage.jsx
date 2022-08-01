@@ -34,8 +34,12 @@ const LoginPage = () => {
         <section>
             <Box
                 component="form"
+                onSubmit={formik.handleSubmit}
                 sx={{
-                    "& .MuiTextField-root": { m: 1, width: "25ch" },
+                    margin: "0 auto",
+                    mt: 5,
+                    width: 500,
+                    maxWidth: "100%",
                 }}
                 noValidate
                 autoComplete="off"
@@ -43,29 +47,46 @@ const LoginPage = () => {
                 <Stack spacing={2} direction="column">
                     <h1>Login </h1>
                     <hr />
-                    <Stack spacing={2} direction="column">
+                    <Stack spacing={2} direction="column" alignItems="çenter">
                         <TextField
+                            fullWidth
                             required
                             id="username"
                             label="User Name"
                             name="username"
                             value={formik.values.username}
                             onChange={formik.handleChange}
-                            error={formik.touched.username && Boolean(formik.errors.username)}
-                            helperText={formik.touched.username && formik.errors.username}
+                            error={
+                                formik.touched.username &&
+                                Boolean(formik.errors.username)
+                            }
+                            helperText={
+                                formik.touched.username &&
+                                formik.errors.username
+                            }
                             size="small"
                         />
                         <TextField
                             required
-                            id="outlined-required"
+                            fullWidth
+                            type="password"
+                            id="password"
                             label="User Password"
+                            name="password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            error={
+                                formik.touched.password &&
+                                Boolean(formik.errors.password)
+                            }
+                            helperText={
+                                formik.touched.password &&
+                                formik.errors.password
+                            }
                             size="small"
                         />
                     </Stack>
-                    <Button
-                        type="submit"
-                        variant="outlined"
-                    >
+                    <Button type="submit" variant="outlined">
                         Login
                     </Button>
                 </Stack>

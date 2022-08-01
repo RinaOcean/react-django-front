@@ -1,54 +1,61 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom';
-import AuthContext from '../../contex/AuthContex';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import AuthContext from "../../contex/AuthContex";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { blue } from "@mui/material/colors";
 
-import styles from './header.module.css'
+import styles from "./header.module.css";
 
 const Header = () => {
-  const { user, logoutUser } = useContext(AuthContext);
-  
-  const LoginButton = styled(Button)(({ theme }) => ({
-      color: theme.palette.getContrastText(blue[500]),
-      backgroundColor: blue[500],
-      "&:hover": {
-          backgroundColor: blue[700],
-      },
-  }));
+    const { user, logoutUser } = useContext(AuthContext);
 
-  const RegButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(blue[500]),
-    borderColor: blue[300],
+    const LoginButton = styled(Button)(({ theme }) => ({
+        color: theme.palette.getContrastText(blue[500]),
+        backgroundColor: blue[500],
         "&:hover": {
             backgroundColor: blue[700],
         },
     }));
 
+    const RegButton = styled(Button)(({ theme }) => ({
+        color: theme.palette.getContrastText(blue[500]),
+        borderColor: blue[300],
+        "&:hover": {
+            backgroundColor: blue[700],
+        },
+    }));
 
-  return (
-      <nav className={styles.container}>
-          <div className={styles.titleWrapper}>
-              <h1 className={styles.title}>UCI</h1>
-              <p className={styles.desc}>medical affiliates</p>
-          </div>
+    return (
+        <nav className={styles.container}>
+            <div className={styles.titleWrapper}>
+                <h1 className={styles.title}>UCI</h1>
+                <p className={styles.desc}>medical affiliates</p>
+            </div>
 
-          {user ? (
-              <button onClick={logoutUser}>Logout</button>
-          ) : (
-              <Stack spacing={2} direction="row">
-                  <LoginButton variant="contained" size="small" href="/login">
-                      Login
-                  </LoginButton>
-                  <RegButton variant="outlined" size="small" href="/register">
-                      Register
-                  </RegButton>
-              </Stack>
-          )}
-      </nav>
-  );
+            {user ? (
+                <LoginButton
+                    variant="contained"
+                    size="small"
+                    href="/login"
+                    onClick={logoutUser}
+                >
+                    Logout
+                </LoginButton>
+            ) : (
+                // <button onClick={logoutUser}>Logout</button>
+                <Stack spacing={2} direction="row">
+                    <LoginButton variant="contained" size="small" href="/login">
+                        Login
+                    </LoginButton>
+                    <RegButton variant="outlined" size="small" href="/register">
+                        Register
+                    </RegButton>
+                </Stack>
+            )}
+        </nav>
+    );
 };
 
 export default Header;
