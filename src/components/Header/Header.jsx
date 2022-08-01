@@ -10,7 +10,7 @@ const Header = (props) => {
         <p className={styles.desc}>medical affiliates</p>
       </div>
       
-      <p className="description"> File download</p>
+      {/* <p className="description"> File download</p> */}
       {!props.isAuthenticated ?
          <button className={styles.btn} onClick={()=>props.login()}>Login</button>
       :  <button className={styles.btn} onClick={()=>props.logout()}>Logout</button>
