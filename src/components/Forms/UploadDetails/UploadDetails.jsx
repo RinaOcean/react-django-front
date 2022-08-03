@@ -97,7 +97,7 @@ const onButtonClick = () => {
 
             <div className={styles.inputWrapper}>
               <label htmlFor='password' >Private SSH key password</label>
-              <input  className={formik.errors.password ? styles.inputFieldError : styles.inputField} name='password' id='password' value={formik.values.password} onChange={formik.handleChange} />
+              <input  className={formik.errors.password ? styles.inputFieldError : styles.inputField} type='password' name='password' id='password' value={formik.values.password} onChange={formik.handleChange} />
               {formik.errors && formik.touched ? (
                <div className={styles.errorMessage}>{formik.errors.password}</div>) : null}
             </div>

@@ -47,13 +47,13 @@ const FormikStepper = ({ children, ...props }) => {
         setSessionKey(sessKey);
         setStep((s) => s + 1);
       } catch (e) {
-        setIsFailed(true);
         setErrorMessage(e.response.data.errors.file[0]);
+        setIsFailed(true);
       }
     } else if (step === childrenArray.length - 1) {
       const formData = new FormData(e.target);
       formData.append("session_key", sessionKey);
-
+      console.log(...formData);
       try {
         const res = await axios.post(`${UPLOAD_URL}sftp_upload/`, formData);
         console.log(res);
@@ -61,8 +61,9 @@ const FormikStepper = ({ children, ...props }) => {
         setIsFailed(false);
         setStep((s) => s + 1);
       } catch (e) {
+        console.log(e);
+        setErrorMessage(e.response.data.errors.port[0])
         setIsFailed(true);
-        // setErrorMessage(e.response.data.errors.file[0])
       }
     }
   };
