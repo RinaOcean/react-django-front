@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import { useFormik } from 'formik';
 import * as yup from "yup";
@@ -14,7 +13,19 @@ const Input = styled('input')({
 });
 
 const UploadDetails = () => {
-  const { step, setStep, selectedFile, setSelectedFile, sessionKey, setSessionKey, selectedKey, setSelectedKey, activeBtn, setActiveBtn  } = useContext(FormContext);
+  const {
+      step,
+      setStep,
+      selectedFile,
+      setSelectedFile,
+      sessionKey,
+      setSessionKey,
+      setIsFailed,
+      selectedKey,
+      setSelectedKey,
+      activeBtn,
+      setActiveBtn,
+  } = useContext(FormContext);
   const inputRef = React.useRef(null);
 
   const ValidationSchema = yup.object().shape({
@@ -34,7 +45,7 @@ const UploadDetails = () => {
   
   const formik = useFormik({
     enableReinitialize: false,
-    validationSchema: ValidationSchema,
+    // validationSchema: ValidationSchema,
     initialValues: {
       host_name: '198.19.243.251',
       port: 2222,
@@ -52,14 +63,15 @@ const UploadDetails = () => {
       const keyFile = new FormData();
       keyFile.append("key", e.target.files[0]);     
       formik.setFieldValue('key', e.target.files[0]);
-      
-      if (["pem", ""].includes(e.target.files[0].type)) {
-        setSelectedKey(true)       
-        setActiveBtn(true)
-      } else  {
-        setSelectedKey(false)
-        setActiveBtn(false)
-      }     
+      setIsFailed(false);
+      setSelectedKey(true)       
+      setActiveBtn(true);
+      // if (["pem", ""].includes(e.target.files[0].type)) {
+      //   setActiveBtn(true)
+      // } else  {
+      //   setSelectedKey(false)
+      //   setActiveBtn(false)
+      // }     
     }  
   };
 
@@ -97,7 +109,7 @@ const onButtonClick = () => {
 
             <div className={styles.inputWrapper}>
               <label htmlFor='password' >Private SSH key password</label>
-              <input  className={formik.errors.password ? styles.inputFieldError : styles.inputField} name='password' id='password' value={formik.values.password} onChange={formik.handleChange} />
+              <input  className={formik.errors.password ? styles.inputFieldError : styles.inputField} type='password' name='password' id='password' value={formik.values.password} onChange={formik.handleChange} />
               {formik.errors && formik.touched ? (
                <div className={styles.errorMessage}>{formik.errors.password}</div>) : null}
             </div>

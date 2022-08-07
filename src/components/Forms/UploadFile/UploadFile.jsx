@@ -32,44 +32,58 @@ const UploadFile = () => {
   };
 
   // triggers when file is dropped
-  const handleDrop = async function(e) {  
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) { 
-      
-      if (e.dataTransfer.files[0].name.includes('.xlsx')){
-        formik.setFieldValue('file', e.dataTransfer.files[0]);
-        setSelectedFile(e.dataTransfer.files[0]) 
-        setActiveBtn(true) 
-        setIsFailed(false)
-      }else {
-        setSelectedFile(null) 
-        setActiveBtn(false) 
-        setIsFailed(true);
-        setErrorMessage('Allowed extension is .xlsx only')
-      }       
-      
-    }  
+  const handleDrop = async function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      setDragActive(false);
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        formik.setFieldValue("file", e.dataTransfer.files[0]);
+        setSelectedFile(e.dataTransfer.files[0]); 
+        setIsFailed(false);
+        setActiveBtn(true);
+      }
   };
+  //   if (e.dataTransfer.files && e.dataTransfer.files[0]) { 
+      
+  //     if (e.dataTransfer.files[0].name.includes('.xlsx')){
+  //       formik.setFieldValue('file', e.dataTransfer.files[0]);
+  //       setSelectedFile(e.dataTransfer.files[0]) 
+  //       setActiveBtn(true) 
+  //       setIsFailed(false)
+  //     }else {
+  //       setSelectedFile(null) 
+  //       setActiveBtn(false) 
+  //       setIsFailed(true);
+  //       setErrorMessage('Allowed extension is .xlsx only')
+  //     }       
+      
+  //   }  
+  // };
 
   // triggers when file is selected with click
-  const handleChange = async function(e) {
-    e.preventDefault();
-    if (e.target.files && e.target.files[0]) {
+  const handleChange = async function (e) {
+      e.preventDefault();
+      if (e.target.files && e.target.files[0]) {
+        formik.setFieldValue("file", e.target.files[0]);
+        setSelectedFile(e.target.files[0]); 
+        setIsFailed(false);
+        setActiveBtn(true); 
+   
+  };
+  //   if (e.target.files && e.target.files[0]) {
 
-      if (e.target.files[0].name.includes('.xlsx')){  
-        formik.setFieldValue('file', e.target.files[0]);     
-        setSelectedFile(e.target.files[0]) 
-        setActiveBtn(true) 
-        setIsFailed(false)
-      }else {
-        setSelectedFile(null) 
-        setActiveBtn(false) 
-        setIsFailed(true);
-        setErrorMessage('Allowed extension is .xlsx only')
-      }    
-    }  
+  //     if (e.target.files[0].name.includes('.xlsx')){  
+  //       formik.setFieldValue('file', e.target.files[0]);     
+  //       setSelectedFile(e.target.files[0]) 
+  //       setActiveBtn(true) 
+  //       setIsFailed(false)
+  //     }else {
+  //       setSelectedFile(null) 
+  //       setActiveBtn(false) 
+  //       setIsFailed(true);
+  //       setErrorMessage('Allowed extension is .xlsx only')
+  //     }    
+  //   }  
   };
 
   // triggers the input when the button is clicked

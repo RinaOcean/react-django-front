@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { REG_URL, TOKEN_URL } from "../utils/Urls";
+import { replace } from "formik";
 
 const AuthContext = createContext();
 export default AuthContext;
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }) => {
             setAuthTokens(data);
             setUser(jwt_decode(data.access));
             localStorage.setItem("authTokens", JSON.stringify(data));
-            navigate("/file-upload");
+            navigate("/file-upload", { replace: true });
         } else {
             alert("Something went wrong!");
         }
@@ -57,7 +58,7 @@ export const AuthProvider = ({ children }) => {
             })
         });
         if (response.status === 201) {
-            navigate("/login");
+            navigate("/login", { replace: true });
         } else {
 
             alert("Somthing went wrong!");
@@ -68,7 +69,7 @@ export const AuthProvider = ({ children }) => {
         setAuthTokens(null);
         setUser(null);
         localStorage.removeItem("authTokens");
-        navigate("/");
+        navigate("/", { replace: true });
     };
 
     const contextData = {
