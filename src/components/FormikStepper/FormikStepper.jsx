@@ -45,6 +45,7 @@ const FormikStepper = ({ children, ...props }) => {
         const res = await axios.post(`${UPLOAD_URL}file_upload/`, file);
         const sessKey = res.data?.session_key;
         setSessionKey(sessKey);
+        setIsFailed(false);
         setStep((s) => s + 1);
       } catch (e) {
         setErrorMessage(e.response.data.errors.file[0]);
@@ -53,16 +54,26 @@ const FormikStepper = ({ children, ...props }) => {
     } else if (step === childrenArray.length - 1) {
       const formData = new FormData(e.target);
       formData.append("session_key", sessionKey);
-      console.log(...formData);
       try {
         const res = await axios.post(`${UPLOAD_URL}sftp_upload/`, formData);
-        console.log(res);
         setCompleted(true);
         setIsFailed(false);
         setStep((s) => s + 1);
       } catch (e) {
-        console.log(e);
-        setErrorMessage(e.response.data.errors.port[0])
+        console.log("ERROR=====>", e.response.data.errors);
+        let errMsg = '';
+        if (e.response.data.errors.key) {
+            errMsg = e.response.data.errors.key[0];
+        } else if (e.response.data.errors.host_name) {
+            errMsg = e.response.data.errors.host_name[0];
+        } else if (e.response.data.errors.username) {
+            errMsg = e.response.data.errors.username[0];
+        } else if (e.response.data.errors.port) {
+            errMsg = e.response.data.errors.port[0];
+        } else if (e.response.data.errors.password) {
+            errMsg = e.response.data.errors.password[0];
+        }
+        setErrorMessage( errMsg );
         setIsFailed(true);
       }
     }
