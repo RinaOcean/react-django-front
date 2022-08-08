@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import AuthContext from "../../contex/AuthContex";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { blue } from "@mui/material/colors";
+import AuthContext from "../../contex/AuthContex";
 
 import styles from "./header.module.css";
 
@@ -43,8 +42,8 @@ const Header = () => {
                 >
                     Logout
                 </LoginButton>
-            ) : (
-                // <button onClick={logoutUser}>Logout</button>
+            ) :
+            (               
                 <Stack spacing={2} direction="row">
                     <LoginButton variant="contained" size="small" href="/login">
                         Login

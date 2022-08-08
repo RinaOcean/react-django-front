@@ -5,7 +5,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
 import UploadIcon from "@mui/icons-material/Upload";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import AuthContext from "../../contex/AuthContex";
@@ -30,8 +29,6 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#000000",
             borderRadius: 8,
             "& .MuiSvgIcon-root": {
-                // color: "#FFFFFF",
-                // stroke: "#FFFFFF",
                 fill: "#006bb6",
             },
         },
@@ -81,7 +78,6 @@ const LeftMenu = () => {
                             </ListItem>
                         </List>
                     </nav>
-                    {/* <Divider /> */}
                 </Box>
             ) : null}
         </>

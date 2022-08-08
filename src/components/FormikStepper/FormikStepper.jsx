@@ -159,7 +159,8 @@ const FormikStepper = ({ children, ...props }) => {
                 className={step > 0 ? styles.button : styles.buttonInvis}
                 onClick={() => {
                   setStep((s) => s - 1);
-                  setSelectedFile(null);
+                  setActiveBtn(true);
+                  // setSelectedFile(null);
                 }}
               >
                 back
