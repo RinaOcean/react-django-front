@@ -1,20 +1,35 @@
 import axios from "axios";
-import { BROWSE_URL } from "../../utils/Urls";
+import { GET_ROOT_FOLDER_URL } from "../../utils/Urls";
 
-const FileDownloadPage = async () => {
+const getRootFolderList = async () => {
+    const formdata = new FormData();
+    formdata.append("host_name", "192.168.178.122");
+    formdata.append("port", 2222);
+    formdata.append("username", "tester");
+    formdata.append("password", "password");
 
-    // const res = await axios.get(`${BROWSE_URL}`, {
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //     },
-    // });
+   let listOfItems = [];
 
-    // console.log(res);
+    try {
+        const res = await axios.post(`${GET_ROOT_FOLDER_URL}`, formdata);
+        listOfItems = res.data?.list_of_objects;
+        console.log(res);
+    } catch (e) {
+        console.log(e);       
+    }
+
+    return listOfItems;
+}
+
+const FileDownloadPage = () => {
+    const list = getRootFolderList();
+
+    // console.log(list);
     return (
         <div>
             <p>There's nothing here yet</p>
         </div>
-    )
+    );
 }
 
 export default FileDownloadPage
