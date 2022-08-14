@@ -43,11 +43,14 @@ const FormikStepper = ({ children, ...props }) => {
       file.append("file", selectedFile);
       try {
         const res = await axios.post(`${UPLOAD_URL}file_upload/`, file);
+        
         const sessKey = res.data?.session_key;
+        localStorage.setItem("sessionKey", sessKey);
         setSessionKey(sessKey);
         setIsFailed(false);
         setStep((s) => s + 1);
       } catch (e) {
+        console.log(e);
         setErrorMessage(e.response.data.errors.file[0]);
         setIsFailed(true);
       }
@@ -60,7 +63,7 @@ const FormikStepper = ({ children, ...props }) => {
         setIsFailed(false);
         setStep((s) => s + 1);
       } catch (e) {
-        console.log("ERROR=====>", e.response.data.errors);
+        console.log("ERROR=====>", e);
         let errMsg = '';
         if (e.response.data.errors.key) {
             errMsg = e.response.data.errors.key[0];
