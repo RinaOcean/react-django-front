@@ -7,10 +7,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Stack } from "@mui/material";
+import { Button, IconButton, Stack } from "@mui/material";
 import FolderTwoToneIcon from "@mui/icons-material/FolderTwoTone";
-import InsertDriveFileTwoToneIcon from '@mui/icons-material/InsertDriveFileTwoTone';
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
+import DownloadForOfflineRoundedIcon from "@mui/icons-material/DownloadForOfflineRounded";
 
 export default function DataTable({ columns, rows, withIcon }) {
     const [page, setPage] = React.useState(0);
@@ -37,7 +37,7 @@ export default function DataTable({ columns, rows, withIcon }) {
                                     align={column.align}
                                     style={{
                                         minWidth: column.minWidth,
-                                        backgroundColor: "rgba(0, 0, 0, 0.04)",
+                                        backgroundColor: "rgba(0, 107, 182, 0.08)",
                                     }}
                                 >
                                     {column.label}
@@ -60,9 +60,25 @@ export default function DataTable({ columns, rows, withIcon }) {
                                                     ) : (
                                                         <InsertDriveFileOutlinedIcon />
                                                     );
+                                            } else if (column.id === "action") {
+                                                value =
+                                                    row.obj_type === "file" ? (
+                                                        <IconButton
+                                                            
+                                                            aria-label="download"
+                                                            align="right"
+                                                            onClick={() => console.log(row)}
+                                                        >
+                                                            <DownloadForOfflineRoundedIcon />
+                                                        </IconButton>
+                                                    ) : null;
                                             }
 
-                                            return <TableCell key={column.id}>{value}</TableCell>;
+                                            return (
+                                                <TableCell key={column.id} align={column.align}>
+                                                    {value}
+                                                </TableCell>
+                                            );
                                         })}
 
                                         {/* {withIcon && (

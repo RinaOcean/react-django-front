@@ -33,7 +33,7 @@ const FileDownloadPage = () => {
         { id: "icon", label: "", minWidth: 50, align: "left" },
         { id: "name", label: "Name", minWidth: 170 },
         { id: "obj_type", label: "Type", minWidth: 100 },
-        { id: "action", label: "", minWidth: 170, align: "right"},
+        { id: "action", label: "", minWidth: 70, align: "right"},
     ];
     
     const rows = data?.list_of_objects || [];
