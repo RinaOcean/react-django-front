@@ -12,7 +12,7 @@ import FolderTwoToneIcon from "@mui/icons-material/FolderTwoTone";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 import DownloadForOfflineRoundedIcon from "@mui/icons-material/DownloadForOfflineRounded";
 
-export default function DataTable({ columns, rows, withIcon }) {
+export default function DataTable({ columns, rows, onItemClick }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -37,7 +37,7 @@ export default function DataTable({ columns, rows, withIcon }) {
                                     align={column.align}
                                     style={{
                                         minWidth: column.minWidth,
-                                        backgroundColor: "rgba(0, 107, 182, 0.08)",
+                                        backgroundColor: "rgba(0, 0, 0, 0.03)",
                                     }}
                                 >
                                     {column.label}
@@ -50,7 +50,14 @@ export default function DataTable({ columns, rows, withIcon }) {
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                    <TableRow
+                                        hover
+                                        role="checkbox"
+                                        tabIndex={-1}
+                                        key={row.code}
+                                        onClick={() => onItemClick(row)}
+                                        style={{cursor:"pointer"}}
+                                    >
                                         {columns.map((column) => {
                                             let value = row[column.id];
                                             if (column.id === "icon") {
@@ -64,10 +71,10 @@ export default function DataTable({ columns, rows, withIcon }) {
                                                 value =
                                                     row.obj_type === "file" ? (
                                                         <IconButton
-                                                            
                                                             aria-label="download"
                                                             align="right"
                                                             onClick={() => console.log(row)}
+                                                            style={{ cursor: "pointer" }}
                                                         >
                                                             <DownloadForOfflineRoundedIcon />
                                                         </IconButton>

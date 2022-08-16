@@ -14,13 +14,26 @@ export const rootApi = api.injectEndpoints({
                     //     "Content-Type": "application/json",
                     // },
                     body: data,
+                    providesTags: ["Browse"],
                 };
             },
+            // transformResponse: (response) => response.data,
+        }),
+
+        getItemDetails: builder.mutation({
+            query: (data) => {
+                return {
+                    url: "browse_sftp",
+                    method: "POST",
+                    body: data,
+                };
+            },
+            // invalidatesTags: ["Browse"],
             // transformResponse: (response) => response.data,
         }),
     }),
 });
 
 export const {
-    useGetRootFolderQuery
+    useGetRootFolderQuery, useGetItemDetailsMutation
 } = rootApi;
