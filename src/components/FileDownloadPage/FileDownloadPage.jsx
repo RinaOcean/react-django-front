@@ -25,8 +25,7 @@ const FileDownloadPage = () => {
     // let sessionKey = data?.session_key || '';
     // let rows = data?.list_of_objects || [];
    
-    const [getItemDetails] = useGetItemDetailsMutation();
-  
+    const [getItemDetails] = useGetItemDetailsMutation();  
 
     const onItemClick = (row) => {
         const formData = new FormData();
@@ -38,7 +37,6 @@ const FileDownloadPage = () => {
             .then((res) => {
                 if (row.obj_type === 'dir') {
                     console.log("before",rows);
-                    console.log(res.data?.list_of_objects);
                     setRows(res.data?.list_of_objects);
                     console.log("after", rows);
                 }
