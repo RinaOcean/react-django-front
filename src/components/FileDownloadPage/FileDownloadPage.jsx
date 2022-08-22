@@ -20,7 +20,7 @@ const FileDownloadPage = () => {
     
     const { data } = useGetRootFolderQuery(formdata);
     const [sessionKey, setSessionKey] = useState('');
-    const [rows, setRows] = useState( data?.list_of_objects || [] );
+    const [rows, setRows] = useState([]);
  
     // let sessionKey = data?.session_key || '';
     // let rows = data?.list_of_objects || [];
@@ -41,15 +41,15 @@ const FileDownloadPage = () => {
                     console.log("after", rows);
                 }
                
-           })          
+        })          
     }
     
     useEffect(() => {
         if (data) {
             setSessionKey(data?.session_key);
-            //  setRows(data?.list_of_objects);
+            setRows(data?.list_of_objects);
         }
-    },[rows])
+    },[])
  
     return <DataTable columns={columns} rows={rows} withIcon={true} onItemClick={onItemClick} />;
 }
