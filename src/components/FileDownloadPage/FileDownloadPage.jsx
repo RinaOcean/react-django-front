@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import { useEffect, useState } from "react";
 import { useGetItemDetailsMutation, useGetItemDetailsQuery,  useGetRootFolderQuery } from "../../services/api/rootFolder";
 import { GET_ROOT_FOLDER_URL } from "../../utils/Urls";
@@ -36,10 +36,12 @@ const FileDownloadPage = () => {
         getItemDetails(formData)
             .then((res) => {
                 if (row.obj_type === 'dir') {
-                    console.log("before",rows);
+                    console.log("before", rows);
+                    console.log(res.data?.list_of_objects);
                     setRows(res.data?.list_of_objects);
                     console.log("after", rows);
                 }
+                // console.log(res);
                
         })          
     }
@@ -49,7 +51,7 @@ const FileDownloadPage = () => {
             setSessionKey(data?.session_key);
             setRows(data?.list_of_objects);
         }
-    },[])
+    }, [])
  
     return <DataTable columns={columns} rows={rows} withIcon={true} onItemClick={onItemClick} />;
 }
