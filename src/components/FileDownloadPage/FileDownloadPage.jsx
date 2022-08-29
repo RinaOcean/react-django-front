@@ -35,12 +35,12 @@ const FileDownloadPage = () => {
 
         getItemDetails(formData)
             .then((res) => {
-                if (row.obj_type === 'dir') {
+                // if (row.obj_type === 'dir') {
                     console.log("before", rows);
-                    console.log(res.data?.list_of_objects);
+                    console.log(res);
                     setRows(res.data?.list_of_objects);
                     console.log("after", rows);
-                }
+                // }
                 // console.log(res);
                
         })          
