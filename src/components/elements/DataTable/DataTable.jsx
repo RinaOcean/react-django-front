@@ -27,7 +27,7 @@ export default function DataTable({ columns, rows, onItemClick }) {
 
     return (
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
-            <TableContainer sx={{ maxHeight: 440 }}>
+            <TableContainer sx={{ maxHeight: "100vh" }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
@@ -37,7 +37,7 @@ export default function DataTable({ columns, rows, onItemClick }) {
                                     align={column.align}
                                     style={{
                                         minWidth: column.minWidth,
-                                        backgroundColor: "rgba(0, 0, 0, 0.03)",
+                                        backgroundColor: "rgb(230, 230, 230)",
                                     }}
                                 >
                                     {column.label}
@@ -46,7 +46,8 @@ export default function DataTable({ columns, rows, onItemClick }) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        {rows
+                            ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 return (
                                     <TableRow
@@ -55,7 +56,7 @@ export default function DataTable({ columns, rows, onItemClick }) {
                                         tabIndex={-1}
                                         key={row.code}
                                         onClick={() => onItemClick(row)}
-                                        style={{cursor:"pointer"}}
+                                        style={{ cursor: "pointer" }}
                                     >
                                         {columns.map((column) => {
                                             let value = row[column.id];
