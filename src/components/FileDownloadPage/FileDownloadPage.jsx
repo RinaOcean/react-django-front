@@ -1,8 +1,8 @@
 // import axios from "axios";
 import { Stack } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useGetItemDetailsMutation, useGetItemDetailsQuery,  useGetRootFolderQuery } from "../../services/api/rootFolder";
-import { GET_ROOT_FOLDER_URL } from "../../utils/Urls";
+import { useGetItemDetailsMutation,  useGetRootFolderQuery } from "../../services/api/rootFolder";
+// import { GET_ROOT_FOLDER_URL } from "../../utils/Urls";
 import DataTable from "../elements/DataTable/DataTable";
 
 const FileDownloadPage = () => {
@@ -51,7 +51,7 @@ const FileDownloadPage = () => {
             if (row.obj_type === "dir") {
                 setFolder(res.data?.list_of_objects);
                 setPath(path + `/${row.name}`);
-                refetch()
+                // refetch()
                 // console.log(path);
             }
             console.log(res);
@@ -66,9 +66,9 @@ const FileDownloadPage = () => {
     }, [rows, data, path]);
 
     return (
-        <Stack sx={{width: '100%', direction: "column", marginBottom: '10px'}}>
-            <h3>{path}</h3>
-            <DataTable
+        <Stack sx={{ width: "100%", direction: "column", marginTop: "24px" }}>
+            <h3 style={{marginBottom:'10px'}}>{path}</h3>
+            <DataTable                
                 columns={columns}
                 rows={!folder ? sortededRows : sortededFolder}
                 withIcon={true}
