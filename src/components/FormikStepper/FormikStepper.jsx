@@ -75,6 +75,8 @@ const FormikStepper = ({ children, ...props }) => {
             errMsg = e.response.data.errors.port[0];
         } else if (e.response.data.errors.password) {
             errMsg = e.response.data.errors.password[0];
+        } else if (e.response.data.errors.key_passphrase) {
+            errMsg = e.response.data.errors.key_passphrase[0];
         }
         setErrorMessage( errMsg );
         setIsFailed(true);
