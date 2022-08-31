@@ -50,9 +50,14 @@ const FormikStepper = ({ children, ...props }) => {
         setIsFailed(false);
         setStep((s) => s + 1);
       } catch (e) {
-        console.log(e);
-        setErrorMessage(e.response.data.errors.file[0]);
-        setIsFailed(true);
+        if (e.response.status === 422) {
+          setErrorMessage(e.response.data.errors);
+          setIsFailed(true);
+        } else {
+          setErrorMessage(e.response.data.errors.file[0]);
+          setIsFailed(true);
+        }
+        
       }
     } else if (step === childrenArray.length - 1) {
       const formData = new FormData(e.target);
