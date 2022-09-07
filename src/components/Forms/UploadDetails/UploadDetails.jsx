@@ -67,13 +67,7 @@ const UploadDetails = () => {
       formik.setFieldValue('key', e.target.files[0]);
       setIsFailed(false);
       setSelectedKey(true)       
-      setActiveBtn(true);
-      // if (["pem", ""].includes(e.target.files[0].type)) {
-      //   setActiveBtn(true)
-      // } else  {
-      //   setSelectedKey(false)
-      //   setActiveBtn(false)
-      // }     
+      setActiveBtn(true);  
     }  
   };
 

@@ -6,7 +6,6 @@ import { useGetItemDetailsMutation,  useGetRootFolderQuery } from "../../service
 // import { GET_ROOT_FOLDER_URL } from "../../utils/Urls";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
 import DataTable from "../elements/DataTable/DataTable";
-import { useNavigate } from "react-router-dom";
 
 const FileDownloadPage = () => {
     const columns = [
@@ -50,8 +49,7 @@ const FileDownloadPage = () => {
         formData.append("obj_type", row.obj_type);
         formData.append("session_key", sessionKey);
 
-        getItemDetails(formData).then((res) => {
-            // console.log(res);
+        getItemDetails(formData).then((res) => {            
             if (row.obj_type === "dir") {
                 path.push(row.name);
                 setPath(path);

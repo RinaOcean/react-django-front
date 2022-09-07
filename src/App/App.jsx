@@ -11,6 +11,7 @@ import PrivateRoute from "../utils/PrivateRoute";
 import Register from "../components/RegisterPage/RegisterPage";
 import LeftMenu from "../components/LeftMenu/LeftMenu";
 import FileDownloadPage from "../components/FileDownloadPage/FileDownloadPage";
+import SftpConnectionForm from "../components/SftpConnectionForm/SftpConnectionForm";
 
 import "./App.css";
 
@@ -43,10 +44,14 @@ const  App = () => {
                                     element={<PrivateRoute Component={StepsForm} />}
                                 />
                                 <Route
+                                    path="/sftp-connection"
+                                    element={<PrivateRoute Component={SftpConnectionForm} />}
+                                />
+                                <Route
                                     path="/file-download"
                                     element={<PrivateRoute Component={FileDownloadPage} />}
                                 />
-                                
+
                                 <Route element={<LoginPage />} path="/login" />
                                 <Route element={<Register />} path="/register" />
                             </Routes>
