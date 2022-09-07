@@ -1,5 +1,4 @@
-import React, { Fragment } from "react";
-import { PublicClientApplication } from "@azure/msal-browser";
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Container from "@mui/material/Container";
 import { Box } from "@mui/material";
