@@ -6,8 +6,11 @@ import { useGetItemDetailsMutation,  useGetRootFolderQuery } from "../../service
 // import { GET_ROOT_FOLDER_URL } from "../../utils/Urls";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
 import DataTable from "../elements/DataTable/DataTable";
+import { useLocation } from "react-router-dom";
 
 const FileDownloadPage = () => {
+    const location = useLocation();
+    console.log(location)
     const columns = [
         { id: "icon", label: "", minWidth: 50, align: "left" },
         { id: "name", label: "Name", minWidth: 170 },
@@ -16,12 +19,12 @@ const FileDownloadPage = () => {
     ];
 
     const formdata = new FormData();
-    formdata.append("host_name", "192.168.1.91");
-    formdata.append("port", 2222);
-    formdata.append("username", "tester");
-    formdata.append("password", "password");
+    // formdata.append("host_name", "192.168.1.91");
+    // formdata.append("port", 2222);
+    // formdata.append("username", "tester");
+    // formdata.append("password", "password");
 
-    const { data, isLoading, refetch } = useGetRootFolderQuery(formdata);
+    const data = location.state;
     const [sessionKey, setSessionKey] = useState(data?.session_key || "");
     const [rows, setRows] = useState([]);
     const [folder, setFolder] = useState(null);
@@ -49,7 +52,8 @@ const FileDownloadPage = () => {
         formData.append("obj_type", row.obj_type);
         formData.append("session_key", sessionKey);
 
-        getItemDetails(formData).then((res) => {            
+        getItemDetails(formData).then((res) => {   
+            console.log(res);
             if (row.obj_type === "dir") {
                 path.push(row.name);
                 setPath(path);
@@ -75,7 +79,7 @@ const FileDownloadPage = () => {
     
     const [isBackButtonClicked, setBackbuttonPress] = useState(false);
     useEffect(() => {
-        if (data && !isLoading) {
+        if (data) {
             setSessionKey(data?.session_key);
             setRows(data?.list_of_objects);
         }

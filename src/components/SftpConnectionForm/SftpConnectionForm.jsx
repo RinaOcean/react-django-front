@@ -1,17 +1,20 @@
 import React, { useContext } from "react";
 import { styled } from "@mui/material/styles";
 import { Form, Formik, useFormik } from "formik";
-import * as yup from "yup";
 import styles from "./SftpConnectionForm.module.css";
-
 // import { FormContext } from "../../FormikStepper/FormikStepper";
 import { useEffect } from "react";
 import { HOST_NAME, PORT, USER_NAME } from "../../utils/SftpVariables";
 import { Box, Card, CardContent } from "@mui/material";
 import { useGetRootFolderQuery } from "../../services/api/rootFolder";
 import axios from "axios";
+import { GET_ROOT_FOLDER_URL } from "../../utils/Urls";
+import { useNavigate } from "react-router-dom";
+import { FileDownload } from "@mui/icons-material";
+import FileDownloadPage from "../FileDownloadPage/FileDownloadPage";
 
 const SftpConnectionForm = () => {
+    const navigate = useNavigate();
     // const {
     //     step,
     //     setStep,
@@ -24,53 +27,30 @@ const SftpConnectionForm = () => {
     //     setSelectedKey,
     //     activeBtn,
     //     setActiveBtn,
-    // } = useContext(FormContext);    
-
-    const ValidationSchema = yup.object().shape({
-        host_name: yup.string().max(20, "Too Long!").required("Required"),
-        username: yup.string().max(20, "Too Long!").required("Required"),
-        password: yup.string().max(20, "Too Long!"),
-        key: yup
-            .mixed()
-            .test("fileType", "Only .pem extension is allowed ", (value) =>
-                ["pem", ""].includes(value?.type)
-            ),
-        upload_path: yup.string().max(100, "Too Long!").required("Required"),
-    });
+    // } = useContext(FormContext);     
 
     const formik = useFormik({
         enableReinitialize: false,
-        // validationSchema: ValidationSchema,
         initialValues: {
             host_name: HOST_NAME,
             port: PORT,
             username: USER_NAME,
             password: "",
         },
-        onSubmit: (values) => {
-            console.log(values);
-            const formdata = new FormData();
+        onSubmit: async (values) => {
+            await axios
+                .post(GET_ROOT_FOLDER_URL, values)
+                .then(function (response) {
+                    console.log(response);
+                    navigate("/file-download", { state: response.data });
 
-            formdata.append("host_name", "192.168.1.91");
-            formdata.append("port", 2222);
-            formdata.append("username", "tester");
-            formdata.append("password", "password");
-
-            // axios
-            //     .post("sftp_connection/",values)
-            //     .then(function (response) {
-            //         console.log(response);
-            //     })
-            //     .catch(function (error) {
-            //         console.log(error);
-            //     });
-            //    const { data, isLoading, refetch } = useGetRootFolderQuery(formdata);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });       
+            
         },
     });
-  
-    // const onButtonClick = () => {
-    //     inputRef.current.click();
-    // };
 
     return (
         <Formik>
@@ -83,7 +63,7 @@ const SftpConnectionForm = () => {
                     <Card>
                         <CardContent>
                             <div className={styles.inputWrapper}>
-                                <label htmlFor="hostName">SFTP host name</label>
+                                <label htmlFor="hostName">Host name</label>
                                 <input
                                     className={
                                         formik.errors.host_name
@@ -103,10 +83,10 @@ const SftpConnectionForm = () => {
                             </div>
 
                             <div className={styles.inputWrapper}>
-                                <label htmlFor="port">SFTP port</label>
+                                <label htmlFor="port">Port</label>
                                 <input
                                     className={
-                                        formik.errors.host_port
+                                        formik.errors.port
                                             ? styles.inputFieldError
                                             : styles.inputField
                                     }
@@ -117,13 +97,13 @@ const SftpConnectionForm = () => {
                                 />
                                 {formik.errors && formik.touched ? (
                                     <div className={styles.errorMessage}>
-                                        {formik.errors.host_port}
+                                        {formik.errors.port}
                                     </div>
                                 ) : null}
                             </div>
 
                             <div className={styles.inputWrapper}>
-                                <label htmlFor="username">SFTP username</label>
+                                <label htmlFor="username">Username</label>
                                 <input
                                     className={
                                         formik.errors.username
@@ -143,7 +123,7 @@ const SftpConnectionForm = () => {
                             </div>
 
                             <div className={styles.inputWrapper}>
-                                <label htmlFor="password">Private SSH key password</label>
+                                <label htmlFor="password">Password</label>
                                 <input
                                     className={
                                         formik.errors.password
@@ -167,7 +147,7 @@ const SftpConnectionForm = () => {
                 </Box>
                 <button
                     type="submit"
-                    // className={styles.buttonUploadMore}
+                    className={styles.buttonUploadMore}
                 >
                     Submit
                 </button>

@@ -42,3 +42,13 @@
 .selectedKey {
   margin-left: 10px;
 }
+
+.buttonActive,
+.buttonUploadMore {
+  border-style: none;
+  border: solid 2px #006bb6;
+  padding: 10px 20px;
+  background-color: white;
+  color: #006bb6;
+  cursor: pointer;
+}

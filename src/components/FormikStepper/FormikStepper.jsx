@@ -145,7 +145,6 @@ const FormikStepper = ({ children, ...props }) => {
           </Box>
 
           {/* piece of form */}
-
           <Card>
             <CardContent>
               {!completed ? (
