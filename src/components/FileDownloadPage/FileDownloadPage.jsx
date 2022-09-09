@@ -6,23 +6,19 @@ import { useGetItemDetailsMutation,  useGetRootFolderQuery } from "../../service
 // import { GET_ROOT_FOLDER_URL } from "../../utils/Urls";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
 import DataTable from "../elements/DataTable/DataTable";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 const FileDownloadPage = () => {
     const location = useLocation();
-    console.log(location)
+    const navigate = useNavigate();
+
     const columns = [
         { id: "icon", label: "", minWidth: 50, align: "left" },
         { id: "name", label: "Name", minWidth: 170 },
         { id: "obj_type", label: "Type", minWidth: 100 },
         { id: "action", label: "", minWidth: 70, align: "right" },
     ];
-
-    const formdata = new FormData();
-    // formdata.append("host_name", "192.168.1.91");
-    // formdata.append("port", 2222);
-    // formdata.append("username", "tester");
-    // formdata.append("password", "password");
 
     const data = location.state;
     const [sessionKey, setSessionKey] = useState(data?.session_key || "");
@@ -53,11 +49,14 @@ const FileDownloadPage = () => {
         formData.append("session_key", sessionKey);
 
         getItemDetails(formData).then((res) => {   
-            console.log(res);
+            console.log(res.data?.status);
             if (row.obj_type === "dir") {
                 path.push(row.name);
                 setPath(path);
                 setFolder(res.data?.list_of_objects);
+            } else if (row.obj_type === "file" || res?.data?.status) {
+                navigate("/key-upload", { state: sessionKey });
+                console.log('need to navigate to key_upload');
             }
         });
     };
@@ -112,7 +111,6 @@ const FileDownloadPage = () => {
             >
                 <KeyboardBackspaceRoundedIcon />
             </IconButton>
-            {/* <Button>Back</Button> */}
             <Stack sx={{ width: "100%", direction: "column", marginTop: "24px" }}>
                 <h3 style={{ marginBottom: "10px" }}>{path.join("/")}</h3>
                 <DataTable

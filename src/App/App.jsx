@@ -14,6 +14,7 @@ import FileDownloadPage from "../components/FileDownloadPage/FileDownloadPage";
 import SftpConnectionForm from "../components/SftpConnectionForm/SftpConnectionForm";
 
 import "./App.css";
+import KeyUploadForm from "../components/KeyUploadForm/KeyUploadForm";
 
 const  App = () => {
     return (
@@ -50,6 +51,10 @@ const  App = () => {
                                 <Route
                                     path="/file-download"
                                     element={<PrivateRoute Component={FileDownloadPage} />}
+                                />
+                                <Route
+                                    path="/key-upload"
+                                    element={<PrivateRoute Component={KeyUploadForm} />}
                                 />
 
                                 <Route element={<LoginPage />} path="/login" />

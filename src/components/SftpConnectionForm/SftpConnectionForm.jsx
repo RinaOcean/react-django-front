@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { styled } from "@mui/material/styles";
 import { Form, Formik, useFormik } from "formik";
 import styles from "./SftpConnectionForm.module.css";
-// import { FormContext } from "../../FormikStepper/FormikStepper";
 import { useEffect } from "react";
 import { HOST_NAME, PORT, USER_NAME } from "../../utils/SftpVariables";
 import { Box, Card, CardContent } from "@mui/material";
@@ -14,20 +13,7 @@ import { FileDownload } from "@mui/icons-material";
 import FileDownloadPage from "../FileDownloadPage/FileDownloadPage";
 
 const SftpConnectionForm = () => {
-    const navigate = useNavigate();
-    // const {
-    //     step,
-    //     setStep,
-    //     selectedFile,
-    //     setSelectedFile,
-    //     sessionKey,
-    //     setSessionKey,
-    //     setIsFailed,
-    //     selectedKey,
-    //     setSelectedKey,
-    //     activeBtn,
-    //     setActiveBtn,
-    // } = useContext(FormContext);     
+    const navigate = useNavigate();  
 
     const formik = useFormik({
         enableReinitialize: false,
