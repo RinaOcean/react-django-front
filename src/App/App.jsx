@@ -49,7 +49,7 @@ const  App = () => {
                                     element={<PrivateRoute Component={SftpConnectionForm} />}
                                 />
                                 <Route
-                                    path="/file-download"
+                                    path="/browse-folders"
                                     element={<PrivateRoute Component={FileDownloadPage} />}
                                 />
                                 <Route

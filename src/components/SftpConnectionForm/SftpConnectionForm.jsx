@@ -4,7 +4,7 @@ import { Form, Formik, useFormik } from "formik";
 import styles from "./SftpConnectionForm.module.css";
 import { useEffect } from "react";
 import { HOST_NAME, PORT, USER_NAME } from "../../utils/SftpVariables";
-import { Box, Card, CardContent } from "@mui/material";
+import { Box, Card, CardContent, Stack } from "@mui/material";
 import { useGetRootFolderQuery } from "../../services/api/rootFolder";
 import axios from "axios";
 import { GET_ROOT_FOLDER_URL } from "../../utils/Urls";
@@ -23,28 +23,25 @@ const SftpConnectionForm = () => {
             username: USER_NAME,
             password: "",
         },
-        onSubmit: async (values) => {
+        onSubmit: async (values) => {            
+            let res = null;
             await axios
                 .post(GET_ROOT_FOLDER_URL, values)
-                .then(function (response) {
+                .then(function (response) {   
                     console.log(response);
-                    navigate("/file-download", { state: response.data });
-
+                    res = response;
                 })
                 .catch(function (error) {
                     console.log(error);
-                });       
+                });     
+            navigate("/browse-folders", { state: res?.data });  
             
         },
     });
 
     return (
         <Formik>
-            <Form
-                className={styles.form}
-                autoComplete="off"
-                onSubmit={formik.handleSubmit}               
-            >
+            <Form className={styles.form} autoComplete="off" onSubmit={formik.handleSubmit}>
                 <Box sx={{ width: "100%" }}>
                     <Card>
                         <CardContent>
@@ -82,9 +79,7 @@ const SftpConnectionForm = () => {
                                     onChange={formik.handleChange}
                                 />
                                 {formik.errors && formik.touched ? (
-                                    <div className={styles.errorMessage}>
-                                        {formik.errors.port}
-                                    </div>
+                                    <div className={styles.errorMessage}>{formik.errors.port}</div>
                                 ) : null}
                             </div>
 
@@ -131,12 +126,11 @@ const SftpConnectionForm = () => {
                         </CardContent>
                     </Card>
                 </Box>
-                <button
-                    type="submit"
-                    className={styles.buttonUploadMore}
-                >
-                    Submit
-                </button>
+                <Stack sx={{ marginTop: "30px" }}>
+                    <button type="submit" className={styles.buttonUploadMore}>
+                        Submit
+                    </button>
+                </Stack>
             </Form>
         </Formik>
     );

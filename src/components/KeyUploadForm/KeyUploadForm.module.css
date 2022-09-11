@@ -51,6 +51,7 @@ form {
   background-color: white;
   color: #006bb6;
   cursor: pointer;
+  align-self: flex-end;
 }
 
 .keyUpload {

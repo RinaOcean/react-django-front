@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FileDownload } from "@mui/icons-material";
 import { Form, Formik, useFormik } from "formik";
-import { Box, Card, CardContent } from "@mui/material";
+import { Box, Card, CardContent, Stack } from "@mui/material";
 import axios from "axios";
 import { HOST_NAME, PORT, USER_NAME } from "../../utils/SftpVariables";
 import { useGetRootFolderQuery } from "../../services/api/rootFolder";
@@ -34,22 +34,23 @@ const KeyUploadForm = () => {
                 .post(UPLOAD_KEY_URL, formdata)
                 .then(function (response) {
                     if (response.status === 200) {
-                        navigate("http://127.0.0.1:8000/download_file/");
-
-                        // axios
-                        //     .get(DOWNLOAD_FILE)
-                        //     .then(function (response) {
-                        //         console.log('download', response);
-                        //     })
-                        //     .catch(function (error) {
-                        //         console.log(error);
-                        //     });
+                                        
                     }
-                    console.log(response);
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+            window.location.replace("http://127.0.0.1:8000/download_file/");   
+            // const formData = new FormData();           
+            // formdata.append("session_key", values.session_key);
+            // await axios
+            //     .get(DOWNLOAD_FILE, formData)
+            //     .then(function (response) {
+            //         console.log(response);
+            //     })
+            //     .catch(function (error) {
+            //         console.log(error);
+            //     });   
         },
     });
 
@@ -130,9 +131,15 @@ const KeyUploadForm = () => {
                         </CardContent>
                     </Card>
                 </Box>
-                <button type="submit" disabled={activeBtn ? false : true} className={styles.buttonUploadMore}>
-                    Submit
-                </button>
+                <Stack sx={{marginTop: "30px"}}>
+                    <button
+                        type="submit"
+                        disabled={activeBtn ? false : true}
+                        className={styles.buttonUploadMore}
+                    >
+                        Save
+                    </button>
+                </Stack>
             </Form>
         </Formik>
     );
