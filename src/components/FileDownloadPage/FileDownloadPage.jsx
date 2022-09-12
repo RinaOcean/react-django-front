@@ -57,8 +57,13 @@ const FileDownloadPage = () => {
                     setFolder(res.data?.list_of_objects);
                 } else if (row.obj_type === "file" || res?.data?.status === 200) {
                     console.log("this is file");
-                    navigate("/key-upload", { state: sessionKey });
-                    console.log('need to navigate to key_upload');
+                    navigate("/key-upload", {
+                        state: {
+                            sessionKey: sessionKey,
+                            fileName: row.name
+                        },
+                    });
+                    
                 }
 
         } catch (e) {

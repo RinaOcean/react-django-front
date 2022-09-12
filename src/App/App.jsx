@@ -15,6 +15,7 @@ import SftpConnectionForm from "../components/SftpConnectionForm/SftpConnectionF
 
 import "./App.css";
 import KeyUploadForm from "../components/KeyUploadForm/KeyUploadForm";
+import SuccessPage from "../components/SuccessPage/SuccessPage";
 
 const  App = () => {
     return (
@@ -55,6 +56,10 @@ const  App = () => {
                                 <Route
                                     path="/key-upload"
                                     element={<PrivateRoute Component={KeyUploadForm} />}
+                                />
+                                <Route
+                                    path="/success"
+                                    element={<PrivateRoute Component={SuccessPage} />}
                                 />
 
                                 <Route element={<LoginPage />} path="/login" />
