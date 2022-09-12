@@ -30,27 +30,22 @@ const KeyUploadForm = () => {
             formdata.append("key_file", values.key_file);
             formdata.append("key_passphrase", values.key_passphrase);
             formdata.append("session_key", values.session_key);
-            await axios
-                .post(UPLOAD_KEY_URL, formdata)
-                .then(function (response) {
-                    if (response.status === 200) {
-                                        
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            try {
+                const res = await axios.post(UPLOAD_KEY_URL, formdata)
+                
+            } catch (e) {
+                console.log(e);
+            }
+            
             window.location.replace("http://127.0.0.1:8000/download_file/");   
             // const formData = new FormData();           
-            // formdata.append("session_key", values.session_key);
-            // await axios
-            //     .get(DOWNLOAD_FILE, formData)
-            //     .then(function (response) {
-            //         console.log(response);
-            //     })
-            //     .catch(function (error) {
-            //         console.log(error);
-            //     });   
+            // formdata.append('session_key', values.session_key);
+            // try {
+            //     console.log(values.session_key);
+            //     await axios.get(DOWNLOAD_FILE, formData)
+            // } catch (e) {
+            //     console.log(e);
+            // }           
         },
     });
 

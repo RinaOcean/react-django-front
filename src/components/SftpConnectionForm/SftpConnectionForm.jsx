@@ -23,19 +23,14 @@ const SftpConnectionForm = () => {
             username: USER_NAME,
             password: "",
         },
-        onSubmit: async (values) => {            
-            let res = null;
-            await axios
-                .post(GET_ROOT_FOLDER_URL, values)
-                .then(function (response) {   
-                    console.log(response);
-                    res = response;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });     
-            navigate("/browse-folders", { state: res?.data });  
-            
+        onSubmit: async (values) => {        
+            try {
+                const res = await axios.post(GET_ROOT_FOLDER_URL, values);
+                console.log(res);
+                navigate("/browse-folders", { state: res?.data });  
+            } catch (e) {
+                console.log(e);
+            }            
         },
     });
 

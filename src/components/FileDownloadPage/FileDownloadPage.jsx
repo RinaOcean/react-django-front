@@ -42,23 +42,29 @@ const FileDownloadPage = () => {
 
     const [getItemDetails] = useGetItemDetailsMutation();
   
-    const onItemClick = (row) => {
+    const onItemClick = async (row) => {
         const formData = new FormData();
         formData.append("name", row.name);
         formData.append("obj_type", row.obj_type);
         formData.append("session_key", sessionKey);
 
-        getItemDetails(formData).then((res) => {   
-            console.log(res.data?.status);
-            if (row.obj_type === "dir") {
-                path.push(row.name);
-                setPath(path);
-                setFolder(res.data?.list_of_objects);
-            } else if (row.obj_type === "file" || res?.data?.status === 200) {
-                navigate("/key-upload", { state: sessionKey });
-                console.log('need to navigate to key_upload');
-            }
-        });
+        try {
+            const res = await getItemDetails(formData)
+                if (row.obj_type === "dir") {
+                    console.log("this is folder");
+                    path.push(row.name);
+                    setPath(path);
+                    setFolder(res.data?.list_of_objects);
+                } else if (row.obj_type === "file" || res?.data?.status === 200) {
+                    console.log("this is file");
+                    navigate("/key-upload", { state: sessionKey });
+                    console.log('need to navigate to key_upload');
+                }
+
+        } catch (e) {
+            console.log(e);
+        }
+          
     };
 
     const onBackClickHandler = () => {
