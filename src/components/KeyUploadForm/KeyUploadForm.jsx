@@ -49,7 +49,8 @@ const KeyUploadForm = () => {
                 link.setAttribute("download", location.state.fileName); //or any other extension
                 document.body.appendChild(link);
                 link.click();
-                navigate("/success");
+                setTimeout(() => navigate("/success"), 1000);
+                
             } catch (e) {
                 console.log(e);
             }
