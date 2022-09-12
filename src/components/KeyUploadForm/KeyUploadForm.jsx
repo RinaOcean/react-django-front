@@ -22,7 +22,7 @@ const KeyUploadForm = () => {
         enableReinitialize: false,
         initialValues: {
             key_file: null,
-            key_passphrase: "",
+            key_passphrase: " ",
             session_key: location.state.sessionKey,
         },
         onSubmit: async (values) => {
@@ -46,7 +46,7 @@ const KeyUploadForm = () => {
                 const url = window.URL.createObjectURL(new Blob([res.data]));
                 const link = document.createElement("a");
                 link.href = url;
-                link.setAttribute("download", location.state.fileName); //or any other extension
+                link.setAttribute("download", location.state.fileName.replace(/\.[^.]+$/, "")); //or any other extension
                 document.body.appendChild(link);
                 link.click();
                 setTimeout(() => navigate("/success"), 1000);
