@@ -4,15 +4,9 @@ export const rootApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getRootFolder: builder.query({
             query: (data) => {
-                return {
-                    // mode: "no-cors",
+                return {                    
                     url: "sftp_connection/",
                     method: "POST",
-                    // credentials: "include",
-                    // headers: {
-                    //     Accept: "application/json",
-                    //     "Content-Type": "application/json",
-                    // },
                     body: data,
                     providesTags: ["Browse"],
                 };

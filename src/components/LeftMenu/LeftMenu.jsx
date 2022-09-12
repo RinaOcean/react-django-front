@@ -66,7 +66,7 @@ const LeftMenu = () => {
                                 sx={{
                                     color: "#8C8C8C",
                                 }}
-                                to={"/file-download"}
+                                to={"/sftp-connection"}
                                 activeClassName={classes.activeLink}
                             >
                                 <ListItemButton >

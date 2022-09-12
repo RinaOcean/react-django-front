@@ -1,0 +1,13 @@
+.messageWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.successIcon {
+  color: rgb(0, 179, 89);
+}
+
+.successMessage {
+  margin-left: 10px;
+}

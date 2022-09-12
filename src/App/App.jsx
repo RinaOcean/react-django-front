@@ -1,5 +1,4 @@
-import React, { Fragment } from "react";
-import { PublicClientApplication } from "@azure/msal-browser";
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Container from "@mui/material/Container";
 import { Box } from "@mui/material";
@@ -12,8 +11,11 @@ import PrivateRoute from "../utils/PrivateRoute";
 import Register from "../components/RegisterPage/RegisterPage";
 import LeftMenu from "../components/LeftMenu/LeftMenu";
 import FileDownloadPage from "../components/FileDownloadPage/FileDownloadPage";
+import SftpConnectionForm from "../components/SftpConnectionForm/SftpConnectionForm";
 
 import "./App.css";
+import KeyUploadForm from "../components/KeyUploadForm/KeyUploadForm";
+import SuccessPage from "../components/SuccessPage/SuccessPage";
 
 const  App = () => {
     return (
@@ -44,10 +46,22 @@ const  App = () => {
                                     element={<PrivateRoute Component={StepsForm} />}
                                 />
                                 <Route
-                                    path="/file-download"
+                                    path="/sftp-connection"
+                                    element={<PrivateRoute Component={SftpConnectionForm} />}
+                                />
+                                <Route
+                                    path="/browse-folders"
                                     element={<PrivateRoute Component={FileDownloadPage} />}
                                 />
-                                
+                                <Route
+                                    path="/key-upload"
+                                    element={<PrivateRoute Component={KeyUploadForm} />}
+                                />
+                                <Route
+                                    path="/success"
+                                    element={<PrivateRoute Component={SuccessPage} />}
+                                />
+
                                 <Route element={<LoginPage />} path="/login" />
                                 <Route element={<Register />} path="/register" />
                             </Routes>
