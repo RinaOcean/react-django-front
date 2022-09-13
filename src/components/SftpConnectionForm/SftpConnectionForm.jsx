@@ -1,11 +1,8 @@
 import React, { useContext } from "react";
-import { styled } from "@mui/material/styles";
 import { Form, Formik, useFormik } from "formik";
 import styles from "./SftpConnectionForm.module.css";
-import { useEffect } from "react";
 import { HOST_NAME, PORT, USER_NAME } from "../../utils/SftpVariables";
 import { Box, Card, CardContent, Stack } from "@mui/material";
-import { useGetRootFolderQuery } from "../../services/api/rootFolder";
 import axios from "axios";
 import { GET_ROOT_FOLDER_URL } from "../../utils/Urls";
 import { useNavigate } from "react-router-dom";
@@ -26,10 +23,11 @@ const SftpConnectionForm = () => {
         onSubmit: async (values) => {        
             try {
                 const res = await axios.post(GET_ROOT_FOLDER_URL, values);
-                console.log(res);
                 navigate("/browse-folders", { state: res?.data });  
             } catch (e) {
-                console.log(e);
+                if (e.request.status === 404) {
+                    alert('Failed to connect to sftp')
+                }
             }            
         },
     });

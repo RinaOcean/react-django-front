@@ -34,6 +34,13 @@ const KeyUploadForm = () => {
                 const res = await axios.post(UPLOAD_KEY_URL, formdata);
             } catch (e) {
                 console.log(e);
+                
+                if (e.request.status === 404) {
+                    alert("Invalid data inserted");
+                }
+                if (e.request.status === 422) {
+                    alert("Failed to decript file");
+                }
             }
 
             try {
@@ -53,6 +60,9 @@ const KeyUploadForm = () => {
                 
             } catch (e) {
                 console.log(e);
+                if (e.request.status === 404) {
+                    alert("File was not downloaded on previous step");
+                }
             }
             
         },
