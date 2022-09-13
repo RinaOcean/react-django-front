@@ -51,12 +51,10 @@ const FileDownloadPage = () => {
         try {
             const res = await getItemDetails(formData)
                 if (row.obj_type === "dir") {
-                    console.log("this is folder");
                     path.push(row.name);
                     setPath(path);
                     setFolder(res.data?.list_of_objects);
                 } else if (row.obj_type === "file" || res?.data?.status === 200) {
-                    console.log("this is file");
                     navigate("/key-upload", {
                         state: {
                             sessionKey: sessionKey,
@@ -67,7 +65,9 @@ const FileDownloadPage = () => {
                 }
 
         } catch (e) {
-            console.log(e);
+            if (e.request.status === 404) {
+                alert("Failed to connect to sftp");
+            }
         }
           
     };
