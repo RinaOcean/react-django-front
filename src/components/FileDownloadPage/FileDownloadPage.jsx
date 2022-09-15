@@ -48,6 +48,7 @@ const FileDownloadPage = () => {
         formData.append("obj_type", row.obj_type);
         formData.append("session_key", sessionKey);
 
+        let errMsg = "";
         try {
             const res = await getItemDetails(formData)
                 if (row.obj_type === "dir") {
@@ -60,16 +61,16 @@ const FileDownloadPage = () => {
                             sessionKey: sessionKey,
                             fileName: row.name
                         },
-                    });
-                    
+                    });                    
                 }
 
         } catch (e) {
             if (e.request.status === 404) {
-                alert("Failed to connect to sftp");
+                const dirtyString = JSON.stringify(e.response.data.errors);
+                errMsg = dirtyString.replace(/[\[\]"{}]/g, "");
             }
-        }
-          
+            alert(`Failed to connect to sftp. ${errMsg}`);
+        }          
     };
 
     const onBackClickHandler = () => {

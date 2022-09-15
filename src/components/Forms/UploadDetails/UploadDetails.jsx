@@ -6,7 +6,7 @@ import styles from './UploadDetails.module.css'
 
 import {FormContext} from "../../FormikStepper/FormikStepper";
 import { useEffect } from 'react';
-import { HOST_NAME, PORT, USER_NAME } from '../../../utils/SftpVariables';
+import { PORT, UPLOAD_HOST_NAME, UPLOAD_PORT, UPLOAD_USER_NAME, USER_NAME } from '../../../utils/SftpVariables';
 
 
 const Input = styled('input')({
@@ -48,14 +48,14 @@ const UploadDetails = () => {
       enableReinitialize: false,
       // validationSchema: ValidationSchema,
       initialValues: {
-          host_name: HOST_NAME,
-          port: PORT,
-          username: USER_NAME,
+          host_name: UPLOAD_HOST_NAME,
+          port: UPLOAD_PORT,
+          username: UPLOAD_USER_NAME,
           password: "",
           key: null,
           key_passphrase: "",
           upload_path: "/inbox/",
-      },     
+      },
   });
 
   const handleChange = function(e) {
