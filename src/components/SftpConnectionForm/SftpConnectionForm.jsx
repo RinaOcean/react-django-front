@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Form, Formik, useFormik } from "formik";
 import styles from "./SftpConnectionForm.module.css";
-import { HOST_NAME, PORT, USER_NAME } from "../../utils/SftpVariables";
+import { DOWNLOAD_HOST_NAME, DOWNLOAD_PORT, DOWNLOAD_USER_NAME } from "../../utils/SftpVariables";
 import { Box, Card, CardContent, Stack } from "@mui/material";
 import axios from "axios";
 import { GET_ROOT_FOLDER_URL } from "../../utils/Urls";
@@ -15,20 +15,38 @@ const SftpConnectionForm = () => {
     const formik = useFormik({
         enableReinitialize: false,
         initialValues: {
-            host_name: HOST_NAME,
-            port: PORT,
-            username: USER_NAME,
+            host_name: DOWNLOAD_HOST_NAME,
+            port: DOWNLOAD_PORT,
+            username: DOWNLOAD_USER_NAME,
             password: "",
         },
-        onSubmit: async (values) => {        
+        onSubmit: async (values) => {
+            let errMsg = "";
             try {
                 const res = await axios.post(GET_ROOT_FOLDER_URL, values);
-                navigate("/browse-folders", { state: res?.data });  
+                navigate("/browse-folders", { state: res?.data });
             } catch (e) {
                 if (e.request.status === 404) {
-                    alert('Failed to connect to sftp')
+                    const dirtyString = JSON.stringify(e.response.data.errors);
+                    errMsg = dirtyString.replace(/[\[\]"{}]/g, "");
+                    // if (e.response.data.errors.password) {
+                    //     errMsg = e.response.data.errors.password[0];
+                    // } 
+                    // if (e.response.data.errors.username) {
+                    //     errMsg = e.response.data.errors.username[0];
+                    // } 
+                    // if (e.response.data.errors.port) {
+                    //     errMsg = e.response.data.errors.port[0];
+                    // } 
+                    // if (e.response.data.errors.host_name) {
+                    //     errMsg = e.response.data.errors.host_name[0];
+                    // }                     
                 }
-            }            
+                if (e.request.status === 400) {
+                    
+                }
+                alert(`Failed to connect to sftp. ${errMsg}`);
+            }
         },
     });
 

@@ -30,16 +30,18 @@ const KeyUploadForm = () => {
             formdata.append("key_file", values.key_file);
             formdata.append("key_passphrase", values.key_passphrase);
             formdata.append("session_key", values.session_key);
+
+            let errMsg = '';
             try {
                 const res = await axios.post(UPLOAD_KEY_URL, formdata);
             } catch (e) {
-                console.log(e);
-                
+                const dirtyString = JSON.stringify(e.response.data.errors);
+                errMsg = dirtyString.replace(/[\[\]"{}]/g, "");
                 if (e.request.status === 404) {
-                    alert("Invalid data inserted");
+                    alert(`Invalid data inserted. ${errMsg}`);
                 }
                 if (e.request.status === 422) {
-                    alert("Failed to decript file");
+                    alert(`Failed to decript file. ${errMsg}`);
                 }
             }
 
@@ -60,11 +62,14 @@ const KeyUploadForm = () => {
                 
             } catch (e) {
                 console.log(e);
+                const dirtyString = JSON.stringify(e.response.data.errors);
+                errMsg = dirtyString.replace(/[\[\]"{}]/g, "");
+                
                 if (e.request.status === 404) {
-                    alert("File was not downloaded on previous step");
+                    alert(`File was not downloaded on previous step ${errMsg}`);
                 }
-            }
-            
+                alert(`${errMsg}`);
+            }            
         },
     });
 
