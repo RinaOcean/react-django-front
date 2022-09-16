@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
 
         if (response.status === 200) {
             setAuthTokens(data);
-            setUser(jwt_decode(data.access));
+            setUser(jwt_decode(data.access));            
             localStorage.setItem("authTokens", JSON.stringify(data));
             navigate("/file-upload", { replace: true });
         } else {
