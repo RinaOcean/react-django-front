@@ -1,6 +1,4 @@
 export const BASE_URL = "http://127.0.0.1:8000/";
-export const UPLOAD_URL = "http://127.0.0.1:8000/";
-
 export const TOKEN_URL = BASE_URL + "login/token/";
 export const REG_URL = BASE_URL + "login/register/";
 export const GET_ROOT_FOLDER_URL = BASE_URL + "sftp_connection/";

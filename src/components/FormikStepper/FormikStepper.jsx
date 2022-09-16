@@ -11,7 +11,7 @@ import { Form, Formik } from "formik";
 import React, { useState, createContext } from "react";
 import axios from "axios";
 import DoneIcon from "@mui/icons-material/Done";
-import { UPLOAD_URL } from "../../utils/Urls";
+import { BASE_URL } from "../../utils/Urls";
 
 import styles from "./FormikStepper.module.css";
 
@@ -42,7 +42,7 @@ const FormikStepper = ({ children, ...props }) => {
       const file = new FormData();
       file.append("file", selectedFile);
       try {
-        const res = await axios.post(`${UPLOAD_URL}file_upload/`, file);
+        const res = await axios.post(`${BASE_URL}file_upload/`, file);
         
         const sessKey = res.data?.session_key;
         localStorage.setItem("sessionKey", sessKey);
@@ -63,12 +63,11 @@ const FormikStepper = ({ children, ...props }) => {
       const formData = new FormData(e.target);
       formData.append("session_key", sessionKey);
       try {
-        const res = await axios.post(`${UPLOAD_URL}sftp_upload/`, formData);
+        const res = await axios.post(`${BASE_URL}sftp_upload/`, formData);
         setCompleted(true);
         setIsFailed(false);
         setStep((s) => s + 1);
       } catch (e) {
-        console.log("ERROR=====>", e);
         let errMsg = '';
         if (e.response.data.errors.key) {
             errMsg = e.response.data.errors.key[0];
