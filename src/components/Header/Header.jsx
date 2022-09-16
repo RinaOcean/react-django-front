@@ -48,9 +48,9 @@ const Header = () => {
                     <LoginButton variant="contained" size="small" href="/login">
                         Login
                     </LoginButton>
-                    <RegButton variant="outlined" size="small" href="/register">
+                    {/* <RegButton variant="outlined" size="small" href="/register">
                         Register
-                    </RegButton>
+                    </RegButton> */}
                 </Stack>
             )}
         </nav>
