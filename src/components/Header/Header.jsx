@@ -9,7 +9,7 @@ import styles from "./header.module.css";
 
 const Header = () => {
     const { user, logoutUser } = useContext(AuthContext);
-
+   
     const LoginButton = styled(Button)(({ theme }) => ({
         color: theme.palette.getContrastText(blue[500]),
         backgroundColor: blue[500],
@@ -34,16 +34,18 @@ const Header = () => {
             </div>
 
             {user ? (
-                <LoginButton
-                    variant="contained"
-                    size="small"
-                    href="/login"
-                    onClick={logoutUser}
-                >
-                    Logout
-                </LoginButton>
-            ) :
-            (               
+                <Stack spacing={2} direction="row">
+                    <span>{user.username}</span>
+                    <LoginButton
+                        variant="contained"
+                        size="small"
+                        href="/login"
+                        onClick={logoutUser}
+                    >
+                        Logout
+                    </LoginButton>
+                </Stack>
+            ) : (
                 <Stack spacing={2} direction="row">
                     <LoginButton variant="contained" size="small" href="/login">
                         Login
