@@ -7,14 +7,17 @@ import { Provider } from "react-redux";
 
 
 import "./index.css";
+import { AuthProvider } from "./contex/AuthContex";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
+    <React.StrictMode>
+        <Provider store={store}>
+            <BrowserRouter>
+                <AuthProvider>
+                    <App />
+                </AuthProvider>
+            </BrowserRouter>
+        </Provider>
+    </React.StrictMode>,
+    document.getElementById("root")
 );
