@@ -136,4 +136,4 @@ const FileDownloadPage = () => {
     );
 };
 
-export default FileDownloadPage
+export default FileDownloadPage;

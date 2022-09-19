@@ -17,10 +17,12 @@ import "./App.css";
 import KeyUploadForm from "../components/KeyUploadForm/KeyUploadForm";
 import SuccessPage from "../components/SuccessPage/SuccessPage";
 
-const  App = () => {
+const App = () => {
+    
     return (
         <div className="app">
             <AuthProvider>
+
                 <Header />
                 <Container>
                     <Box
