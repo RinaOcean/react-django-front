@@ -6,17 +6,18 @@ import { blue } from "@mui/material/colors";
 import AuthContext from "../../contex/AuthContex";
 
 import styles from "./header.module.css";
+import LoginButton from "../../elements/LoginButton";
 
 const Header = () => {
     const { user, logoutUser } = useContext(AuthContext);
-   
-    const LoginButton = styled(Button)(({ theme }) => ({
-        color: theme.palette.getContrastText(blue[500]),
-        backgroundColor: blue[500],
-        "&:hover": {
-            backgroundColor: blue[700],
-        },
-    }));
+    console.log("from app", user);
+    // const LoginButton = styled(Button)(({ theme }) => ({
+    //     color: theme.palette.getContrastText(blue[500]),
+    //     backgroundColor: blue[500],
+    //     "&:hover": {
+    //         backgroundColor: blue[700],
+    //     },
+    // }));
 
     const RegButton = styled(Button)(({ theme }) => ({
         color: theme.palette.getContrastText(blue[500]),
@@ -45,7 +46,7 @@ const Header = () => {
                         Logout
                     </LoginButton>
                 </Stack>
-            ) : (
+            ) : (                    
                 <Stack spacing={2} direction="row">
                     <LoginButton variant="contained" size="small" href="/login">
                         Login
