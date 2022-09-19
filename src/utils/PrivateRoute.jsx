@@ -7,7 +7,10 @@ const PrivateRoute = ({Component}) => {
     let { user } = useContext(AuthContext);
 
     if (user) {
-        return user.admin ? <Component /> : <RestrictedAccessPage />;
+        if (user?.admin) {
+            return <Component />;
+        }
+        return <RestrictedAccessPage />;
         
     }
     return <Navigate to="/login" />;

@@ -33,7 +33,7 @@ const App = () => {
                                 justifyContent: "center",
                             }}
                 >
-                    {user.admin ? <LeftMenu /> : null}
+                    {user?.admin ? <LeftMenu /> : null}
                            
                             <Box
                                 sx={{
