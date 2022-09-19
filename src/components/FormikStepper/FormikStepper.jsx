@@ -51,7 +51,7 @@ const FormikStepper = ({ children, ...props }) => {
         setStep((s) => s + 1);
       } catch (e) {
         if (e.response.status === 422) {
-          setErrorMessage(e.response.data.errors);
+          setErrorMessage(e.response.data.errors.file[0]);
           setIsFailed(true);
         } else {
           setErrorMessage(e.response.data.errors.file[0]);
