@@ -20,7 +20,7 @@ import "./App.css";
 
 const App = () => {
     const { user } = useContext(AuthContext);
-    console.log(user);
+    
     return (
         <div className="app">
                     <Header />

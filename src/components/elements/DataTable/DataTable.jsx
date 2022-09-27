@@ -24,7 +24,7 @@ export default function DataTable({ columns, rows, onItemClick }) {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-
+    
     return (
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
             <TableContainer sx={{ maxHeight: "100vh" }}>

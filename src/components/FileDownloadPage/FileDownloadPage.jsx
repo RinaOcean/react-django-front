@@ -19,13 +19,14 @@ const FileDownloadPage = () => {
         { id: "obj_type", label: "Type", minWidth: 100 },
         { id: "action", label: "", minWidth: 70, align: "right" },
     ];
+    
 
     const data = location.state;
     const [sessionKey, setSessionKey] = useState(data?.session_key || "");
     const [rows, setRows] = useState([]);
     const [folder, setFolder] = useState(null);
     const [path, setPath] = useState(['root']);
-    
+
     const sortededRows = rows?.reduce((acc, element) => {
         if (element.obj_type === "dir") {
             return [element, ...acc];
@@ -74,19 +75,21 @@ const FileDownloadPage = () => {
     };
 
     const onBackClickHandler = () => {
+        console.log(path);
         const formData = new FormData();
         formData.append("name", "..");
         formData.append("obj_type", "dir");
         formData.append("session_key", sessionKey);
-
+        console.log(formData);
         
         getItemDetails(formData).then(async (res) => {
+            console.log(res);
             path.pop();
             await setPath(path);
             setFolder(res.data?.list_of_objects);
         });
+        
     };
-
     
     const [isBackButtonClicked, setBackbuttonPress] = useState(false);
     useEffect(() => {
