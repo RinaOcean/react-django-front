@@ -16,7 +16,7 @@ export default function DataTable({ columns, rows, onItemClick }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-    const handleChangePage = (event, newPage) => {
+    const handleChangePage = (event, newPage) => {        
         setPage(newPage);
     };
 
