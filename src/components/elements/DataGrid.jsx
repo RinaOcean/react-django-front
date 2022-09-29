@@ -92,8 +92,6 @@ export default function DataGrid({
     };
 
     const handleChangePage = (event, newPage) => {
-        console.log('page====>>>>', page);
-        console.log("newPage====>>>>", newPage);
         onPageChange(newPage + 1);
     };
 
