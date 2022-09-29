@@ -37,28 +37,18 @@ function EnhancedTableHead(props) {
 
     return (
         <TableHead>
-            <TableRow
-                sx={{ "& .MuiTableCell-head": { color: "var(--gray)", padding: "11px 10px" } }}
-            >
+            <TableRow>
                 {columns.map((column) => (
                     <TableCell
                         key={column.id}
-                        sortDirection={orderBy === column.id ? order : false}
+                        align={column.align}
+                        style={{
+                            minWidth: column.minWidth,
+                        }}
                     >
-                        <TableSortLabel
-                            active={orderBy === column.id}
-                            direction={orderBy === column.id ? order : "asc"}
-                            onClick={createSortHandler(column.id)}
-                        >
-                            {column.label}
-                            {orderBy === column.label ? (
-                                <Box component="span" sx={visuallyHidden}>
-                                    {order === "desc" ? "sorted descending" : "sorted ascending"}
-                                </Box>
-                            ) : null}
-                        </TableSortLabel>
+                        {column.label}                       
                     </TableCell>
-                ))}                
+                ))}
             </TableRow>
         </TableHead>
     );
@@ -102,13 +92,10 @@ export default function DataGrid({
 
     return (
         <Box sx={{ width: "100%" }}>
-            <Paper sx={{ mb: 2, mt: "20px", boxShadow: "none" }}>
-                <TableContainer>
-                    <Table sx={{ minWidth: 750 }} size="small" aria-labelledby="tableTitle">
+            <Paper sx={{ width: "100%", overflow: "hidden" }}>
+                <TableContainer sx={{ maxHeight: "100vh" }}>
+                    <Table stickyHeader aria-label="sticky table" size="small">
                         <EnhancedTableHead
-                            order={order}
-                            orderBy={orderBy}
-                            onRequestSort={handleRequestSort}
                             columns={columns}
                         />
                         <TableBody>
@@ -120,15 +107,7 @@ export default function DataGrid({
                                             tabIndex={-1}
                                             key={row.id}
                                             onClick={onClick ? () => onClick(row) : undefined}
-                                            style={{ cursor: "pointer" }}
-                                            sx={{
-                                                height: "39px",
-                                                "& .MuiTableCell-root ": {
-                                                    padding: "11px 10px",
-                                                    borderBottom: "1px solid",
-                                                    borderBottomColor: "var(--light-gray)",
-                                                },
-                                            }}
+                                            style={{ cursor: "pointer" }}                                             
                                         >
                                             {columns.map((column) => {
                                                 let value = row[column.id];
@@ -146,7 +125,7 @@ export default function DataGrid({
                                                                 aria-label="download"
                                                                 align="right"
                                                                 onClick={() => console.log(row)}
-                                                                style={{ cursor: "pointer" }}
+                                                                style={{ cursor: "pointer", padding: 0 }}
                                                             >
                                                                 <DownloadForOfflineRoundedIcon />
                                                             </IconButton>
