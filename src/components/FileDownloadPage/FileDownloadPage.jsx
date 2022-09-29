@@ -84,11 +84,8 @@ const FileDownloadPage = () => {
         formData.append("name", "..");
         formData.append("obj_type", "dir");
         formData.append("session_key", sessionKey);
-         console.log(path);
         if (page === 1) {
-            getItemDetails(formData).then(async (res) => {
-                console.log(res);
-               
+            getItemDetails(formData).then(async (res) => {               
                 path.pop();
                 await setPath(path);
                 setFolder(res.data?.list_of_objects);
