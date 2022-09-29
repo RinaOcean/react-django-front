@@ -57,7 +57,7 @@ const FileDownloadPage = () => {
         let errMsg = "";
         try {
             const res = await getItemDetails(formData)
-                if (row.obj_type === "dir") {
+                if (row.obj_type === "dir" || res?.data?.status === 200) {
                     path.push(row.name);
                     setPath(path);
                     setFolder(res.data?.list_of_objects);
@@ -65,9 +65,9 @@ const FileDownloadPage = () => {
                     navigate("/key-upload", {
                         state: {
                             sessionKey: sessionKey,
-                            fileName: row.name
+                            fileName: row.name,
                         },
-                    });                    
+                    });
                 }
 
         } catch (e) {
@@ -87,23 +87,19 @@ const FileDownloadPage = () => {
         let errMsg = "";
         if (page === 1) {
             try {
-                const res = await getItemDetails(formData)
+                const res = await getItemDetails(formData)                
                 path.pop();
                 await setPath(path);
-                setFolder(res.data?.list_of_objects);
+                setFolder(res.data?.list_of_objects);                
 
             } catch (e) {
                 if (e.request.status === 404) {
                 const dirtyString = JSON.stringify(e.response.data.errors);
                 errMsg = dirtyString.replace(/[\[\]"{}]/g, "");
             }
-            alert(`Failed to connect to sftp. ${errMsg}`);
-            }
-            // getItemDetails(formData).then(async (res) => {               
-            //     path.pop();
-            //     await setPath(path);
-            //     setFolder(res.data?.list_of_objects);
-            // });            
+                alert(`Failed to connect to sftp. ${errMsg}`);
+               
+            }         
         }
 
         if (page > 1) {
