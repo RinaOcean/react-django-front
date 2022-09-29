@@ -10,7 +10,6 @@ import LoginButton from "../../elements/LoginButton";
 
 const Header = () => {
     const { user, logoutUser } = useContext(AuthContext);
-    console.log("from app", user);
     // const LoginButton = styled(Button)(({ theme }) => ({
     //     color: theme.palette.getContrastText(blue[500]),
     //     backgroundColor: blue[500],
