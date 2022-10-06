@@ -125,7 +125,7 @@ const onButtonClick = () => {
           </div>
 
           <div className={styles.inputWrapper}>
-              <label htmlFor="password">Private SSH key password</label>
+              <label htmlFor="password">SFTP password</label>
               <input
                   className={formik.errors.password ? styles.inputFieldError : styles.inputField}
                   type="password"
@@ -140,7 +140,7 @@ const onButtonClick = () => {
           </div>
 
           <div className={styles.inputWrapper}>
-              <label htmlFor="key">Private SSH file, please use only OpenSSH keys </label>
+              <label htmlFor="key">PGP decryption key</label>
               <input
                   ref={inputRef}
                   type="file"
