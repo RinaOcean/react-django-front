@@ -1,5 +1,7 @@
 export const BASE_URL = "http://127.0.0.1:8000/";
+export const LOGIN_URL = BASE_URL + "login";
 export const TOKEN_URL = BASE_URL + "login/token/";
+export const TOKEN_REFRESH_URL = BASE_URL + "login/token/refresh/";
 export const REG_URL = BASE_URL + "login/register/";
 export const GET_ROOT_FOLDER_URL = BASE_URL + "sftp_connection/";
 export const BROWSE_URL = BASE_URL + "browse_sftp/";

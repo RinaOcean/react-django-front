@@ -85,26 +85,39 @@ const FileDownloadPage = () => {
         formData.append("obj_type", "dir");
         formData.append("session_key", sessionKey);
         let errMsg = "";
-        if (page === 1) {
-            try {
-                const res = await getItemDetails(formData)                
-                path.pop();
-                await setPath(path);
-                setFolder(res.data?.list_of_objects);                
-
-            } catch (e) {
-                if (e.request.status === 404) {
+        try {
+            const res = await getItemDetails(formData);
+            path.pop();
+            await setPath(path);
+            setFolder(res.data?.list_of_objects);
+            setPage(1);
+        } catch (e) {
+            if (e.request.status === 404) {
                 const dirtyString = JSON.stringify(e.response.data.errors);
                 errMsg = dirtyString.replace(/[\[\]"{}]/g, "");
             }
-                alert(`Failed to connect to sftp. ${errMsg}`);
-               
-            }         
-        }
+            alert(`Failed to connect to sftp. ${errMsg}`);
+        }    
+        // if (page === 1) {
+        //     try {
+        //         const res = await getItemDetails(formData)                
+        //         path.pop();
+        //         await setPath(path);
+        //         setFolder(res.data?.list_of_objects);                
 
-        if (page > 1) {
-            setPage(page - 1);
-        }              
+        //     } catch (e) {
+        //         if (e.request.status === 404) {
+        //         const dirtyString = JSON.stringify(e.response.data.errors);
+        //         errMsg = dirtyString.replace(/[\[\]"{}]/g, "");
+        //     }
+        //         alert(`Failed to connect to sftp. ${errMsg}`);
+               
+        //     }         
+        // }
+
+        // if (page > 1) {
+        //     setPage(page - 1);
+        // }              
     };
     
     const [isBackButtonClicked, setBackbuttonPress] = useState(false);
