@@ -95,9 +95,7 @@ const KeyUploadForm = () => {
                     <Card>
                         <CardContent>
                             <div className={styles.inputWrapper}>
-                                <label htmlFor="key_file">
-                                    Private SSH file, please use only OpenSSH keys
-                                </label>
+                                <label htmlFor="key_file">PGP decryption key</label>
                                 <input
                                     ref={inputRef}
                                     type="file"
@@ -150,7 +148,7 @@ const KeyUploadForm = () => {
                         </CardContent>
                     </Card>
                 </Box>
-                <Stack sx={{marginTop: "30px"}}>
+                <Stack sx={{ marginTop: "30px" }}>
                     <button
                         type="submit"
                         disabled={activeBtn ? false : true}

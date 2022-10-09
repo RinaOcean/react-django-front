@@ -140,7 +140,7 @@ const onButtonClick = () => {
           </div>
 
           <div className={styles.inputWrapper}>
-              <label htmlFor="key">PGP decryption key</label>
+              <label htmlFor="key">Private SSH file, please use only OpenSSH keys</label>
               <input
                   ref={inputRef}
                   type="file"
