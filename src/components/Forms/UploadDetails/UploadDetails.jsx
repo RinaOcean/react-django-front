@@ -52,6 +52,7 @@ const UploadDetails = () => {
           port: UPLOAD_PORT,
           username: UPLOAD_USER_NAME,
           password: "",
+          ssh_check: false,
           key: null,
           key_passphrase: "",
           upload_path: "/inbox/",
@@ -139,32 +140,38 @@ const onButtonClick = () => {
               ) : null}
           </div>
 
-          <div className={styles.inputWrapper}>
-              <label htmlFor="key">Private SSH file, please use only OpenSSH keys</label>
-              <input
-                  ref={inputRef}
-                  type="file"
-                  id="key"
-                  name="key"
-                  className={styles.keyUpload}
-                  onChange={handleChange}
-              />
-              {formik.errors && formik.touched ? (
-                  <div className={styles.errorMessage}>{formik.errors.key}</div>
-              ) : null}
-              <div>
-                  <button type="button" onClick={onButtonClick}>
-                      Browse
-                  </button>
-                  {!selectedKey ? (
-                      <span className={styles.selectedKey}>file is not selected</span>
-                  ) : (
-                      <span className={styles.selectedKey}>{formik.values.key?.name}</span>
-                  )}
-              </div>
+          <div className={styles.sshCheckbox}>
+            <input type="checkbox" name="ssh_check" onChange={formik.handleChange}/>
+            <label>SSH file</label>
           </div>
+          {/* {formik.values.ssh_check === true ? (
+            <> */}
+                <div className={formik.values.ssh_check === true ? styles.inputWrapper : styles.inputWrapperDisabled}>
+                    <label htmlFor="key">Private SSH file, please use only OpenSSH keys</label>
+                    <input
+                        ref={inputRef}
+                        type="file"
+                        id="key"
+                        name="key"
+                        className={styles.keyUpload}
+                        onChange={handleChange}                        
+                    />
+                {formik.errors && formik.touched ? (
+                    <div className={styles.errorMessage}>{formik.errors.key}</div>
+                ) : null}
+                <div>
+                    <button type="button" onClick={onButtonClick} disabled={formik.values.ssh_check === true ? false : true}>
+                        Browse
+                    </button>
+                    {!selectedKey ? (
+                        <span className={styles.selectedKey}>file is not selected</span>
+                    ) : (
+                        <span className={styles.selectedKey}>{formik.values.key?.name}</span>
+                    )}
+                </div>
+            </div>
 
-          <div className={styles.inputWrapper}>
+          <div className={formik.values.ssh_check === true ? styles.inputWrapper : styles.inputWrapperDisabled}>
               <label htmlFor="key_passphrase">SSH key passphrase</label>
               <input
                   className={
@@ -175,12 +182,14 @@ const onButtonClick = () => {
                   id="key_passphrase"
                   value={formik.values.key_passphrase}
                   required
+                  disabled={formik.values.ssh_check === true ? false : true}
                   onChange={formik.handleChange}
               />
               {formik.errors && formik.touched ? (
                   <div className={styles.errorMessage}>{formik.errors.key_passphrase}</div>
               ) : null}
           </div>
+            {/* </>  ) : null}   */}
 
           <div className={styles.inputWrapper}>
               <label htmlFor="upload_path">Upload path</label>

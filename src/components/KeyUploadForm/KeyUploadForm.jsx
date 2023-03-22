@@ -73,20 +73,20 @@ const KeyUploadForm = () => {
         },
     });
 
-      const handleChange = function (e) {
-          e.preventDefault();
+    const handleChange = function (e) {
+        e.preventDefault();
 
-          if (e.target.files && e.target.files[0]) {        
-              formik.setFieldValue("key_file", e.target.files[0]);              
-              setSelectedKey(true);
-              setActiveBtn(true);
-          }
-      };
-      const inputRef = React.useRef(null);
-      // triggers the input when the button is clicked
-      const onButtonClick = () => {
-          inputRef.current.click();
-      };
+        if (e.target.files && e.target.files[0]) {        
+            formik.setFieldValue("key_file", e.target.files[0]);              
+            setSelectedKey(true);
+            setActiveBtn(true);
+        }
+    };
+    const inputRef = React.useRef(null);
+    // triggers the input when the button is clicked
+    const onButtonClick = () => {
+        inputRef.current.click();
+    };
 
     return (
         <Formik>

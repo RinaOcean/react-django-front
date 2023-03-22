@@ -62,10 +62,9 @@ const FormikStepper = ({ children, ...props }) => {
               setErrorMessage(e.response.data.errors.file[0]);
           } 
           setIsFailed(true);
-        }
-        
+        }        
       }
-    } else if (step === childrenArray.length - 1) {
+    } else if (step === childrenArray.length - 1) {      
       const formData = new FormData(e.target);
       formData.append("session_key", sessionKey);
       try {

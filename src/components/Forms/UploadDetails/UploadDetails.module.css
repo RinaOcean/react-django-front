@@ -8,6 +8,20 @@
   margin-bottom: 15px;
 }
 
+.sshCheckbox input {
+  margin: 0;
+  margin-right: 5px;
+}
+
+.inputWrapperDisabled {
+  color: rgb(148, 148, 148);
+  margin-bottom: 15px;
+}
+
+.inputWrapperDisabled .inputField {
+  border: 1px solid rgb(202, 201, 201);
+}
+
 .inputField {
   all: unset;
   width: 100%;
