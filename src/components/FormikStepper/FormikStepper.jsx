@@ -197,7 +197,7 @@ const FormikStepper = ({ children, ...props }) => {
                 setCompleted(false);
               }}
             >
-              UploadMore
+              Upload More
             </button>
           )}
         </Form>
